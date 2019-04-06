@@ -11,7 +11,7 @@ import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
-
+import { NgxContentLoadingModule } from 'ngx-content-loading';
 import {
   MatButtonModule,
   MatInputModule,
@@ -27,12 +27,15 @@ import {
   MatExpansionModule,
   MatIconModule,
   MatCardModule,
-  MatGridListModule
+  MatGridListModule,
+  MatSnackBarModule,
 } from '@angular/material';
 
 import { ToastModule } from 'primeng/toast';
+import { BookDetailComponent } from 'app/book/book-detail/book-detail.component';
 @NgModule({
   imports: [
+    NgxContentLoadingModule,
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
@@ -54,6 +57,7 @@ import { ToastModule } from 'primeng/toast';
     MatSelectModule,
     MatFormFieldModule,
     ReactiveFormsModule,
+    MatSnackBarModule,
     ToastModule,
   ],
   declarations: [
@@ -65,6 +69,7 @@ import { ToastModule } from 'primeng/toast';
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
+    BookDetailComponent,
   ]
 })
 

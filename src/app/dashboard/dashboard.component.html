@@ -2,21 +2,23 @@
 	<h3 style="padding-left:15px">Dashboard</h3>
 </mat-toolbar> -->
 <div style="margin-top:70px;">
+
 	<div class="container-fluid">
+
 		<mat-toolbar style="height:90px;margin-bottom: 30px;font-size: 0.9rem;">
 			<mat-icon>filter_list</mat-icon>
-			<mat-select style="width:30%;padding-left: 10px;" placeholder="Filter" [formControl]="toppings" multiple>
+			<mat-select style="width:30%;padding-left: 10px;" placeholder="Filter" [formControl]="categories" multiple>
 				<mat-select-trigger>
-					{{toppings.value ? toppings.value[0] : ''}}
-					<span *ngIf="toppings.value?.length > 1">
-						(+{{toppings.value.length - 1}} {{toppings.value?.length === 2 ? 'other' : 'Lainnya'}})
+					{{labelCategorySelected}}
+					<span *ngIf="categories.value?.length > 1">
+						(+{{categories.value.length - 1}} {{categories.value?.length === 2 ? 'Lainnya' : 'Lainnya'}})
 					</span>
 				</mat-select-trigger>
-				<mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+				<mat-option (onSelectionChange)="showSelectedCategory($event)" *ngFor="let category of categoryList" [value]="category.kode_kategori +'|'+ category.judul_kategori">{{category.judul_kategori}}</mat-option>
 			</mat-select>
 			<mat-form-field style="width:60%;padding-left:100px;" *ngIf="isSearch == true">
 				<!-- <mat-icon matPrefix *ngIf="isSearch">search</mat-icon> -->
-				<input #searchInput matInput type="email" tabindex="1" placeholder="Masukkan pencarian..." formControlName="email">
+				<input #searchInput matInput type="text" tabindex="1" placeholder="Masukkan pencarian..." [formControl]="keyword">
 			</mat-form-field>
 			<button style="justify-content: flex-end;" mat-button *ngIf="!isSearch" (click)="toggleSearch()">
 				<mat-icon>search</mat-icon>
@@ -26,9 +28,20 @@
 				<mat-icon>close</mat-icon>
 			</button>
 		</mat-toolbar>
-
-
-
+		<div class="row" *ngIf="isLoading">
+			<div class="col-md-4" *ngFor="let i of [1,2,3,4,5,6]">
+				<div class="card card-chart" style=" background:white;box-shadow: unset">
+				<ngx-content-loading style="margin-top:-20px;"  [speed]="'2000ms'" [width]="295"
+				 [height]="300" [primaryColor]="'#dddddd'" [secondaryColor]="'#f2f2f2'">
+					<!-- <svg:g ngx-rect width="290" height="280" y="20" rx="5" ry="5"></svg:g> -->
+					<svg:g ngx-rect width="260" height="200" x="17" rx="5" ry="5"></svg:g>
+					<svg:g ngx-rect width="200" height="10" y="210" x="17" rx="5" ry="5"></svg:g>
+					<svg:g ngx-rect width="200" height="10" y="230" x="17" rx="5" ry="5"></svg:g>
+					<svg:g ngx-rect width="200" height="10" y="270" x="17" rx="5" ry="5"></svg:g>
+				</ngx-content-loading>
+			</div>
+			</div>
+		</div>
 		<!-- <div class="row">
 			<div class="col-lg-3 col-md-6 col-sm-6">
 				<div class="card card-stats">
@@ -117,23 +130,23 @@
 				</div>
 			</div> -->
 			<div class="col-md-4" *ngFor="let book of bukuList">
-				<div class="card card-chart">
-					<div class="card-header card-header-warning" style="padding:unset">
-						<div class="ct-chart"><img src="../../assets/img/book-cover-2.jpg" width="100%" height="200px" style="border-radius:3px;"></div>
+				<div class="card card-chart" (click)="gotoDetailBook(book.kode_buku)">
+					<div class="card-header card-header-warning"  style="background: whitesmoke; padding:unset; box-shadow: 0 3px 4px silver">
+						<div class="ct-chart" style="text-align:center;background:whitesmoke;"><img src="{{restApi.url + book.path_image}}" width="100%" height="200px" style="border-radius:3px;"></div>
 					</div>
 					<div class="card-body">
 						<h4 class="card-title">{{book.judul}}</h4>
-						<p class="card-category">Bahasa Pemgrograman Dasar</p>
+						<p class="card-category">{{book.kategori}}</p>
 						<div style="margin-top:15px;">
 							<p class="card-category" style="float:left;">Stok : {{book.stok}}</p>
 							<p class="card-category" style="float:right;position:relative">Disukai : {{book.ratting}}</p>
 						</div>
 					</div>
-					<div class="card-footer">
+					<!-- <div class="card-footer">
 						<div class="stats">
-							<i class="material-icons">access_time</i> campaign sent 2 days ago
+							<i class="material-icons">access_time</i> <span style="margin-top:2px;">{{book.update_at}}</span>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<!-- <div class="col-md-4">
@@ -153,7 +166,7 @@
 				</div>
 			</div> -->
 		</div>
-		<div class="row">
+		<!-- <div class="row">
 			<div class="col-lg-6 col-md-12">
 				<div class="card">
 					<div class="card-header card-header-tabs card-header-primary">
@@ -446,6 +459,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 	</div>
 </div>

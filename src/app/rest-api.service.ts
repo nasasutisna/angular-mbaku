@@ -7,9 +7,14 @@ import { HttpClient } from '@angular/common/http';
 export class RestApiService {
 
   apiUrl:string = 'http://localhost/api-mbaku/public/api/v1/';
+  public url:string = 'http://localhost/api-mbaku/';
   constructor(public http: HttpClient) { }
 
-  getData(tableModule:string=''){
-    return this.http.get(this.apiUrl + tableModule);
+  getDataBuku(category:any='', keyword:any = ''){
+    return this.http.get(this.apiUrl + `dashboard/getBookList?category=${category}&keyword=${keyword}`);
+  }
+
+  getCategories(){
+    return this.http.get(this.apiUrl + `dashboard/getCategories`);
   }
 }
