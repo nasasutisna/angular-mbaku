@@ -10,6 +10,8 @@ import { DataListModule }  from 'primeng/primeng';
 import { AgmCoreModule } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ImageComponentComponent } from './image-component/image-component.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -20,6 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     ComponentsModule,
     RouterModule,
+    FlexLayoutModule,
     AppRoutingModule,
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
@@ -28,6 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    ImageComponentComponent,
     // DashboardComponent,
   ],
   providers: [],

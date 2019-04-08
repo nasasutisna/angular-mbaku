@@ -17,4 +17,8 @@ export class RestApiService {
   getCategories(){
     return this.http.get(this.apiUrl + `dashboard/getCategories`);
   }
+
+  getDetailBook(id){
+    return this.http.get(this.apiUrl + `book/detail/${id}`);
+  }
 }

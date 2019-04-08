@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit {
   }
 
   gotoDetailBook(id:any){
-    this.router.navigate(["book/detail/",id],{relativeTo: this.activatedRoute.parent});
+    this.router.navigate(["/book/",id]);
   }
 
   getCategories() {

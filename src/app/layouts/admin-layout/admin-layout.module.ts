@@ -20,7 +20,6 @@ import {
   MatTooltipModule,
   MatSelectModule,
   MatCheckboxModule,
-  MatNavList,
   MatNativeDateModule,
   MatBottomSheetModule,
   MatToolbarModule,
@@ -29,25 +28,33 @@ import {
   MatCardModule,
   MatGridListModule,
   MatSnackBarModule,
+  MatDialogModule,
+  MatDividerModule,
+  MatListModule,
 } from '@angular/material';
 
 import { ToastModule } from 'primeng/toast';
 import { BookDetailComponent } from 'app/book/book-detail/book-detail.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 @NgModule({
   imports: [
     NgxContentLoadingModule,
+    FlexLayoutModule,
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
     MatButtonModule,
     MatRippleModule,
     MatFormFieldModule,
+    MatListModule,
     MatIconModule,
     MatCardModule,
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
     MatCheckboxModule,
+    MatDividerModule,
     MatNativeDateModule,
     MatBottomSheetModule,
     MatButtonModule,
@@ -59,6 +66,8 @@ import { BookDetailComponent } from 'app/book/book-detail/book-detail.component'
     ReactiveFormsModule,
     MatSnackBarModule,
     ToastModule,
+    MatDialogModule,
+    
   ],
   declarations: [
     DashboardComponent,

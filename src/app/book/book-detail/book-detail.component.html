@@ -1,3 +1,35 @@
-<p>
-  book-detail works!
-</p>
+<!-- <mat-toolbar style="padding:10px!important;">
+	<h3 style="padding-left:15px">Dashboard</h3>
+</mat-toolbar> -->
+<div style="margin-top:70px;">
+
+  <div class="container-fluid">
+    <div>
+      <div class="container" fxLayout="row">
+        <div style="height:300px;background:orange;width:30%" fxLayoutAlign="start center">
+          <div style="width:100%;height:100%;background:white;padding-left:20px;padding-right:20px;padding-top:10px;padding-bottom:10px;">
+            <img src="{{restApi.url + book.path_image}}" width="100%" height="100%" style="border-radius:3px;">
+          </div>
+        </div>
+        <div style="height:300px;width:70%" flex="none" fxLayoutAlign="start start">
+          <mat-list style="width:100%">
+            <mat-list-item style="margin-bottom:10px;">
+              <h3>{{book.judul}}</h3>
+            </mat-list-item>
+            <mat-divider style="margin-left:10px;"></mat-divider>
+          </mat-list>
+        </div>
+      </div>
+      <div class="container" fxLayout="row">
+        <div style="height:100px;background:red;width:30%" fxLayoutAlign="start center">
+          <div>
+
+          </div>
+        </div>
+        <div style="height:100px;background:blue;width:70%" flex="none" fxLayoutAlign="end center">
+          end
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

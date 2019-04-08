@@ -54,19 +54,8 @@ export const AdminLayoutRoutes: Routes = [
     //     }]
     // }
     { path: 'dashboard',      
-        component: DashboardComponent ,
-        children: [
-            {
-                path: 'book/detail/:id',
-                component: BookDetailComponent,
-                data: {
-                    //allowedRoles: ["Zarząd", "Scrum Master"]
-                }
-            }
-        ]
-    
-    },
-    // { path: 'book/detail/:id',           component: BookDetailComponent },
+        component: DashboardComponent},
+    { path: 'book/:id',           component: BookDetailComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'table-list',     component: TableListComponent },
     { path: 'typography',     component: TypographyComponent },
