@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
-import { RestApiService } from 'app/rest-api.service';
+import { RestApiService } from 'app/service/rest-api.service';
 @Component({
   selector: 'app-book-detail',
   templateUrl: './book-detail.component.html',

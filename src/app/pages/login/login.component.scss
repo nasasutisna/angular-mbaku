@@ -1,0 +1,27 @@
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+    margin-top: 3vh;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+
+  ::ng-deep .mat-focused .mat-form-field-label {
+    /*change color of label*/
+    color: darkcyan !important;
+   }
+
+   .lable-login-form{
+    line-height: 35px;
+    font-weight: bold;
+    font-family: inherit;
+   }
+  
+  ::ng-deep.mat-form-field-ripple {
+   /*change color of underline when focused*/
+   background-color: darkcyan !important;;
+  }
+  

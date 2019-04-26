@@ -1,13 +1,15 @@
 import { Component, ViewChild, ElementRef, OnInit, NgModule } from '@angular/core';
 import * as Chartist from 'chartist';
-import { RestApiService } from 'app/rest-api.service';
+import { RestApiService } from 'app/service/rest-api.service';
 import { MessageService } from 'primeng/components/common/messageservice';
-import { MatBottomSheetRef, MatBottomSheet, MatInput } from '@angular/material';
-import { TableListComponent } from 'app/table-list/table-list.component';
+import { MatBottomSheetRef, MatBottomSheet, MatInput, MatPaginator } from '@angular/material';
+import { TableListComponent } from 'app/pages/table-list/table-list.component';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { debounceTime } from 'rxjs/operators'; 
+import { debounceTime } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
+import { GlobalService } from 'app/global.service';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -15,28 +17,53 @@ import { Router, ActivatedRoute } from '@angular/router';
   providers: [MessageService]
 })
 export class DashboardComponent implements OnInit {
-
-  @ViewChild('searchInput') inputEl: ElementRef; bukuList: any = [];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('searchInput') inputEl: ElementRef; 
+  bukuList: any = [];
   categories = new FormControl();
+  sortBy = new FormControl();
   keyword = new FormControl();
   isSearch: boolean = false;
   isLoading: boolean = false;
   categorySelected: any[] = [];
   labelCategorySelected: string;
   categoryList: any[];
+  sortByList: any[];
+  
+  upDown:string = "";
+  sortTitle:any;
+  sortColor:string = '';
+
+  formData: any = {
+    pageIndex: 0,
+    pageSize: 6,
+    category: [],
+    keyword: '',
+    sortBy:'',
+  }
+
+  public totalSize = 0;
 
   constructor(
     public restApi: RestApiService,
     private messageService: MessageService,
     public bottomSheet: MatBottomSheet,
     private snackBar: MatSnackBar,
-    public router:Router,
-    public activatedRoute: ActivatedRoute
+    public router: Router,
+    public activatedRoute: ActivatedRoute,
+    public globalService: GlobalService
   ) {
     this.getDataBuku();
     this.getCategories();
-    this.search();
 
+    // this.sortByList = [
+    //   { title: 'Terpopuler' }, { title: 'Paling Banyak Disukai' }, { title: 'Paling Sedikit Disukai' }, { title: 'Stok Terbanyak' }, { title: 'Stok Terkecil' }
+    // ]
+
+    this.sortByList = [
+      { title: 'Jumlah Ratting', value:'ratting' },
+      { title: 'Jumlah Stok', value:'stok' }
+    ]
   }
 
   showSuccess() {
@@ -51,10 +78,18 @@ export class DashboardComponent implements OnInit {
     this.isSearch = !this.isSearch;
   }
 
+  public handlePage(e: any) {
+    console.log(e);
+    this.formData.pageIndex = e.pageIndex;
+    this.formData.pageSize = e.pageSize;
+    this.getDataBuku();
+  }
+
   getDataBuku() {
     this.isLoading = true;
-    this.restApi.getDataBuku().subscribe((results: any) => {
+    this.restApi.getDataBuku(this.formData).subscribe((results: any) => {
       this.bukuList = results.data;
+      this.totalSize = results.totalPage;
       console.log(results);
       this.isLoading = false;
     },
@@ -64,8 +99,8 @@ export class DashboardComponent implements OnInit {
       })
   }
 
-  gotoDetailBook(id:any){
-    this.router.navigate(["/book/",id]);
+  gotoDetailBook(id: any) {
+    this.router.navigate(["/book/", id]);
   }
 
   getCategories() {
@@ -82,22 +117,23 @@ export class DashboardComponent implements OnInit {
   }
 
   showSelectedCategory(event) {
-    if (event.isUserInput) {
-      let value = event.source.value;
-      let checked = event.source.selected;
-      let idx = this.categorySelected.findIndex(i => i === value);
+    console.log(event);
 
-      if (checked) {
-        if (idx == -1) {
-          this.categorySelected.push(value);
-        }
-      }
-      else {
-        if (idx != -1) {
-          this.categorySelected.splice(idx, 1);
-        }
+    let value = event.source.value;
+    let checked = event.checked;
+    let idx = this.categorySelected.findIndex(i => i === value);
+
+    if (checked) {
+      if (idx == -1) {
+        this.categorySelected.push(value);
       }
     }
+    else {
+      if (idx != -1) {
+        this.categorySelected.splice(idx, 1);
+      }
+    }
+
 
     if (this.categorySelected.length > 0) {
       let category: string = this.categorySelected[0];
@@ -106,36 +142,55 @@ export class DashboardComponent implements OnInit {
     }
 
     this.isLoading = true;
-    this.restApi.getDataBuku(JSON.stringify(this.categorySelected)).subscribe((results: any) => {
+    this.formData.category = JSON.stringify(this.categorySelected);
+    this.restApi.getDataBuku(this.formData).subscribe((results: any) => {
       this.bukuList = results.data;
       this.isLoading = false;
     },
       err => {
-        console.log('error',err);
+        console.log('error', err);
         this.showMessage('Data gagal diload, Silahkan cek koneksi anda');
         // this.isLoading = false;
       });
   }
 
-  search(){
-    this.keyword.valueChanges.pipe(debounceTime(1500)).subscribe((keyword:any) => {
-      console.log('keyword', keyword);
-      this.restApi.getDataBuku(JSON.stringify(this.categorySelected),keyword).subscribe((results: any) => {
+  search() {
+    this.globalService.events$.forEach((keyword) => {
+      console.log('searc',keyword);
+
+      this.formData.category = JSON.stringify(this.categorySelected);
+      this.formData.keyword = keyword;
+
+      this.restApi.getDataBuku(this.formData).subscribe((results: any) => {
         this.bukuList = results.data;
+        this.totalSize = results.totalPage;
         this.isLoading = false;
       },
         err => {
-          console.log('error',err);
+          console.log('error', err);
           this.showMessage('Data gagal diload, Silahkan cek koneksi anda');
           // this.isLoading = false;
         });
-    })
+    });
+    // this.keyword.valueChanges.pipe(debounceTime(1500)).subscribe((keyword: any) => {
+    //   console.log('keyword', keyword);
+      
+      
+    // })
   }
 
-  showMessage(message: string, action: string='Close') {
+  showMessage(message: string, action: string = 'Close') {
     this.snackBar.open(message, action, {
       duration: 5000,
     });
+  }
+
+  sortingProcess(e){
+    this.sortTitle = e.title;
+    this.upDown = (this.upDown == 'asc') ? 'desc' : 'asc';
+    this.sortColor ='#c14345';
+    this.formData.sortBy = e.value + '|' + this.upDown;
+    this.getDataBuku();
   }
 
   startAnimationForLineChart(chart) {
@@ -196,8 +251,8 @@ export class DashboardComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.search();
     /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
-
     const dataDailySalesChart: any = {
       labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
       series: [
@@ -280,6 +335,7 @@ export class DashboardComponent implements OnInit {
   openBottomSheet(): void {
     this.bottomSheet.open(TableListComponent);
   }
+  
 
 }
 

@@ -1,0 +1,36 @@
+<div class="container-register">
+  <div fxLayout="row" style="width:100%;box-shadow:0 3px 3px silver;margin:0 auto;border-radius: 8px">
+    <a routerLink='/register' style="color:silver">
+      <mat-icon style="position:absolute;margin-top:15px;margin-left:15px">keyboard_backspace</mat-icon>
+    </a>
+    <div style="background:white;width:100%;padding: 20px;border-radius: 5px;">
+      <div style="text-align:center;height:75px;">
+        <mat-icon style="line-height: 20px;">supervisor_account</mat-icon>
+        <h4 class="lable-login-form">Daftar Anggota</h4>
+      </div>
+      <form [formGroup]="registerForm" class="example-form">
+        <mat-form-field class="example-full-width">
+          <input matInput type="text" formControlName="kode_anggota" placeholder="NIM / NIK">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput type="text" formControlName="nama_lengkap" placeholder="Nama Lengkap">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput type="email" formControlName="email" placeholder="Email">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput type="text" formControlName="nomor_handphone" placeholder="Nomor Handphone">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput formControlName="password" type="{{inputPassword}}" placeholder="Password">
+          <mat-icon matSuffix (click)="showHidePass()">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput type="{{inputPassword}}" placeholder="Ulangi Password">
+        </mat-form-field>
+        <button mat-button (click)="processRegister()" style="width:100%;background-color:darkcyan;color:white">Daftar</button>
+      </form>
+    </div>
+
+  </div>
+</div>

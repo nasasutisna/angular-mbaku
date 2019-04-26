@@ -1,0 +1,34 @@
+<div class="container-register">
+  <div fxLayout="row" style="width:100%;box-shadow:0 3px 3px silver;margin:0 auto;border-radius: 8px">
+    <a routerLink='/dashboard' style="color:silver">
+        <mat-icon style="position:absolute;margin-top:15px;margin-left:15px">close</mat-icon>
+    </a>
+    <div class="logo-img" fxLayoutAlign="start start" style="background:whitesmoke;width:40%;border-radius: 8px 0px 0 8px;">
+      <img src="../../assets/img/logo.jpeg" style="height:50%;width:180px;margin:0 auto;position: relative;top: 15vh"
+        alt="">
+    </div>
+    <div class="container-form" style="background:white;width:60%;padding: 20px;border-radius: 0 8px 8px 0;">
+      <div style="text-align:center;height:75px;">
+          <mat-icon style="line-height: 20px;">supervisor_account</mat-icon>
+          <h4 class="lable-login-form">Buat Akun Mbaku</h4>
+      </div>
+      <form [formGroup]="registerForm" class="example-form">
+        <mat-form-field class="example-full-width">
+          <input matInput formControlName="email" type="email" placeholder="Email">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput formControlName="password" type="{{inputPassword}}" placeholder="Password">
+          <mat-icon matSuffix (click)="showHidePass()">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput formControlName="verifyPassword" type="{{inputPassword}}" placeholder="Ulangi Password">
+        </mat-form-field>
+        <button mat-button style="width:100%;background-color:darkcyan;color:white" (click)="processRegister()">Buat</button>
+      </form>
+      <div>
+        <p>Belum menjadi Anggota ? <a routerLink="/anggota/daftar" style="color:red"> Daftar Anggota</a></p>
+      </div>
+    </div>
+   
+  </div>
+</div>

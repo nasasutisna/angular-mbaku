@@ -1,155 +1,121 @@
 <!-- <mat-toolbar style="padding:10px!important;">
 	<h3 style="padding-left:15px">Dashboard</h3>
 </mat-toolbar> -->
-<div style="margin-top:70px;">
+<div style="margin-top:40px;margin-bottom:50px">
 
-	<div class="container-fluid">
-
-		<mat-toolbar style="height:90px;margin-bottom: 30px;font-size: 0.9rem;">
-			<mat-icon>filter_list</mat-icon>
-			<mat-select style="width:30%;padding-left: 10px;" placeholder="Filter" [formControl]="categories" multiple>
-				<mat-select-trigger>
-					{{labelCategorySelected}}
-					<span *ngIf="categories.value?.length > 1">
-						(+{{categories.value.length - 1}} {{categories.value?.length === 2 ? 'Lainnya' : 'Lainnya'}})
-					</span>
-				</mat-select-trigger>
-				<mat-option (onSelectionChange)="showSelectedCategory($event)" *ngFor="let category of categoryList" [value]="category.kode_kategori +'|'+ category.judul_kategori">{{category.judul_kategori}}</mat-option>
-			</mat-select>
-			<mat-form-field style="width:60%;padding-left:100px;" *ngIf="isSearch == true">
-				<!-- <mat-icon matPrefix *ngIf="isSearch">search</mat-icon> -->
-				<input #searchInput matInput type="text" tabindex="1" placeholder="Masukkan pencarian..." [formControl]="keyword">
-			</mat-form-field>
-			<button style="justify-content: flex-end;" mat-button *ngIf="!isSearch" (click)="toggleSearch()">
-				<mat-icon>search</mat-icon>
-				Pencarian
-			</button>
-			<button mat-button [hidden]=!isSearch (click)="toggleSearch()">
-				<mat-icon>close</mat-icon>
-			</button>
-		</mat-toolbar>
-		<div class="row" *ngIf="isLoading">
-			<div class="col-md-4" *ngFor="let i of [1,2,3,4,5,6]">
-				<div class="card card-chart" style=" background:white;box-shadow: unset">
-				<ngx-content-loading style="margin-top:-20px;"  [speed]="'2000ms'" [width]="295"
-				 [height]="300" [primaryColor]="'#dddddd'" [secondaryColor]="'#f2f2f2'">
-					<!-- <svg:g ngx-rect width="290" height="280" y="20" rx="5" ry="5"></svg:g> -->
-					<svg:g ngx-rect width="260" height="200" x="17" rx="5" ry="5"></svg:g>
-					<svg:g ngx-rect width="200" height="10" y="210" x="17" rx="5" ry="5"></svg:g>
-					<svg:g ngx-rect width="200" height="10" y="230" x="17" rx="5" ry="5"></svg:g>
-					<svg:g ngx-rect width="200" height="10" y="270" x="17" rx="5" ry="5"></svg:g>
-				</ngx-content-loading>
+	<div class="container-fluid" fxLayout='row'>
+		<div fxLayout='column' class="side-filter">
+			<div class="lable-kategori">
+				<p style="margin-top: -10px;">FILTERS</p>
 			</div>
+			<mat-divider></mat-divider>
+			<div class="lable-kategori">
+				<p>Kategori</p>
+			</div>
+
+			<div fxLayout='column' class="filter-kategori">
+				<mat-checkbox (change)="showSelectedCategory($event)" [value]="category.kode_kategori +'|'+ category.judul_kategori"
+				 *ngFor="let category of categoryList" [formControl]="categories">
+					{{category.judul_kategori}}
+				</mat-checkbox>
+			</div>
+			<mat-divider style="margin-top:20px;"></mat-divider>
+
+			<div class="lable-kategori">
+				<p>Lainnya</p>
+			</div>
+
+			<div fxLayout='column' class="filter-kategori" style="margin-bottom:20px;">
+				<mat-checkbox (change)="showSelectedCategory($event)" [formControl]="sortBy">
+					Tampilkan Terpopuler
+				</mat-checkbox>
 			</div>
 		</div>
-		<!-- <div class="row">
-			<div class="col-lg-3 col-md-6 col-sm-6">
-				<div class="card card-stats">
-					<div class="card-header card-header-warning card-header-icon">
-						<div class="card-icon">
-							<i class="material-icons">content_copy</i>
-						</div>
-						<p class="card-category">Used Space</p>
-						<h3 class="card-title">49/50
-							<small>GB</small>
-						</h3>
+
+		<div style="width: 100%;">
+			<div  fxLayout='row'>
+				<div fxLayout='row' style="padding-left:15px;padding-right:10px;height:50px;width:58%;">
+					<div style="line-height:55px;">
+						<b style="font-size:14px;"> Urutkan Berdasarkan :</b>
 					</div>
-					<div class="card-footer">
-						<div class="stats">
-							<i class="material-icons text-danger">warning</i>
-							<a href="#pablo">Get More Space...</a>
+					<div fxLayout="row" *ngFor="let list of sortByList" style="padding-left:20px;line-height:55px;font-size: 12px;">
+						<div class="sort-link" (click)="sortingProcess(list)" [ngStyle]="{'color': sortTitle == list.title ? sortColor : ''}">
+							<span>{{list.title}}</span>
+							<mat-icon *ngIf="sortTitle == list.title && upDown == 'asc'" class="icon-sort">arrow_downward</mat-icon>
+							<mat-icon *ngIf="sortTitle == list.title && upDown == 'desc'" class="icon-sort">arrow_upward</mat-icon>
 						</div>
+					</div>
+
+				</div>
+
+				<div class="paginator-top">
+					<mat-paginator (page)="pageEvent = handlePage($event)" #paginator style="width: 100%;" [length]="totalSize"
+					 [pageSize]="formData.pageSize" [pageSizeOptions]="[6, 12, 24, 100]">
+					</mat-paginator>
+				</div>
+			</div>
+			<!-- <mat-toolbar style="height:90px;margin-bottom: 30px;font-size: 0.9rem;">
+				<mat-icon>filter_list</mat-icon>
+				<mat-select style="width:30%;padding-left: 10px;" placeholder="Filter" [formControl]="categories" multiple>
+					<mat-select-trigger>
+						{{labelCategorySelected}}
+						<span *ngIf="categories.value?.length > 1">
+							(+{{categories.value.length - 1}} {{categories.value?.length === 2 ? 'Lainnya' : 'Lainnya'}})
+						</span>
+					</mat-select-trigger>
+					<mat-option (onSelectionChange)="showSelectedCategory($event)" *ngFor="let category of categoryList" [value]="category.kode_kategori +'|'+ category.judul_kategori">{{category.judul_kategori}}</mat-option>
+				</mat-select>
+				<mat-form-field style="width:60%;padding-left:100px;" *ngIf="isSearch == true">
+					<input #searchInput matInput type="text" tabindex="1" placeholder="Masukkan pencarian..." [formControl]="keyword">
+				</mat-form-field>
+				<button style="justify-content: flex-end;" mat-button *ngIf="!isSearch" (click)="toggleSearch()">
+					<mat-icon>search</mat-icon>
+					Pencarian
+				</button>
+				<button mat-button [hidden]=!isSearch (click)="toggleSearch()">
+					<mat-icon>close</mat-icon>
+				</button>
+			</mat-toolbar> -->
+			<div class="row" *ngIf="isLoading">
+				<div class="col-md-4" *ngFor="let i of [1,2,3,4,5,6]">
+					<div class="card card-chart" style=" background:white;box-shadow: unset">
+						<ngx-content-loading style="margin-top:-20px;" [speed]="'2000ms'" [width]="295" [height]="300" [primaryColor]="'#dddddd'"
+						 [secondaryColor]="'#f2f2f2'">
+							<!-- <svg:g ngx-rect width="290" height="280" y="20" rx="5" ry="5"></svg:g> -->
+							<svg:g ngx-rect width="260" height="200" x="17" rx="5" ry="5"></svg:g>
+							<svg:g ngx-rect width="200" height="10" y="210" x="17" rx="5" ry="5"></svg:g>
+							<svg:g ngx-rect width="200" height="10" y="230" x="17" rx="5" ry="5"></svg:g>
+							<svg:g ngx-rect width="200" height="10" y="270" x="17" rx="5" ry="5"></svg:g>
+						</ngx-content-loading>
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-3 col-md-6 col-sm-6">
-				<div class="card card-stats">
-					<div class="card-header card-header-success card-header-icon">
-						<div class="card-icon">
-							<i class="material-icons">store</i>
+
+			<div class="row">
+				<div class="col-md-4" *ngFor="let book of bukuList">
+					<div class="card card-chart" (click)="gotoDetailBook(book.kode_buku)">
+						<div class="card-header card-header-warning" style="background: whitesmoke; padding:unset; box-shadow: 0 3px 4px silver">
+							<div class="ct-chart" style="text-align:center;background:whitesmoke;"><img src="{{restApi.url + book.path_image}}"
+								 width="100%" height="200px" style="border-radius:3px;"></div>
 						</div>
-						<p class="card-category">Revenue</p>
-						<h3 class="card-title">$34,245</h3>
-					</div>
-					<div class="card-footer">
-						<div class="stats">
-							<i class="material-icons">date_range</i> Last 24 Hours
+						<div class="card-body">
+							<h4 class="card-title">{{book.judul}}</h4>
+							<p class="card-category">{{book.kategori}}</p>
+							<div style="margin-top:15px;">
+								<p class="card-category" style="float:left;">Stok : {{book.stok}}</p>
+								<p class="card-category" style="float:right;position:relative">
+									<mat-icon style="color:#5194ff">thumb_up_alt</mat-icon> {{book.ratting}}
+								</p>
+							</div>
 						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-6 col-sm-6">
-				<div class="card card-stats">
-					<div class="card-header card-header-danger card-header-icon">
-						<div class="card-icon">
-							<i class="material-icons">info_outline</i>
-						</div>
-						<p class="card-category">Fixed Issues</p>
-						<h3 class="card-title">75</h3>
-					</div>
-					<div class="card-footer">
-						<div class="stats">
-							<i class="material-icons">local_offer</i> Tracked from Github
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-6 col-sm-6">
-				<div class="card card-stats">
-					<div class="card-header card-header-info card-header-icon">
-						<div class="card-icon">
-							<i class="fa fa-twitter"></i>
-						</div>
-						<p class="card-category">Followers</p>
-						<h3 class="card-title">+245</h3>
-					</div>
-					<div class="card-footer">
-						<div class="stats">
-							<i class="material-icons">update</i> Just Updated
-						</div>
-					</div>
-				</div>
-			</div>
-		</div> -->
-		<div class="row">
-			<!-- <div class="col-md-3" *ngFor="let book of bukuList">
-				<div class="card card-chart">
-					<div class="card-header card-header-success">
-						<div class="ct-chart" id="dailySalesChart"></div>
-					</div>
-					<div class="card-body">
-						<h4 class="card-title">Daily Sales</h4>
-						<p class="card-category">
-							<span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
-					</div>
-					<div class="card-footer">
-						<div class="stats">
-							<i class="material-icons">access_time</i> updated 4 minutes ago
-						</div>
-					</div>
-				</div>
-			</div> -->
-			<div class="col-md-4" *ngFor="let book of bukuList">
-				<div class="card card-chart" (click)="gotoDetailBook(book.kode_buku)">
-					<div class="card-header card-header-warning"  style="background: whitesmoke; padding:unset; box-shadow: 0 3px 4px silver">
-						<div class="ct-chart" style="text-align:center;background:whitesmoke;"><img src="{{restApi.url + book.path_image}}" width="100%" height="200px" style="border-radius:3px;"></div>
-					</div>
-					<div class="card-body">
-						<h4 class="card-title">{{book.judul}}</h4>
-						<p class="card-category">{{book.kategori}}</p>
-						<div style="margin-top:15px;">
-							<p class="card-category" style="float:left;">Stok : {{book.stok}}</p>
-							<p class="card-category" style="float:right;position:relative">Disukai : {{book.ratting}}</p>
-						</div>
-					</div>
-					<!-- <div class="card-footer">
+						<!-- <div class="card-footer">
 						<div class="stats">
 							<i class="material-icons">access_time</i> <span style="margin-top:2px;">{{book.update_at}}</span>
 						</div>
 					</div> -->
+					</div>
 				</div>
-			</div>
-			<!-- <div class="col-md-4">
+				<!-- <div class="col-md-4">
 				<div class="card card-chart">
 					<div class="card-header card-header-danger">
 						<div class="ct-chart" id="completedTasksChart"></div>
@@ -165,6 +131,11 @@
 					</div>
 				</div>
 			</div> -->
+				<mat-paginator (page)="pageEvent = handlePage($event)" #paginator style="width: 100%;background: unset;margin-bottom:50px"
+				 [length]="totalSize" [pageSize]="formData.pageSize" [pageSizeOptions]="[6, 12, 24, 100]">
+				</mat-paginator>
+
+			</div>
 		</div>
 		<!-- <div class="row">
 			<div class="col-lg-6 col-md-12">

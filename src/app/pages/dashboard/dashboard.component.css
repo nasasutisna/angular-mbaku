@@ -1,0 +1,109 @@
+:host ::ng-deep button {
+    margin-right: .25em;
+}
+
+:host ::ng-deep .custom-toast .ui-toast-message {
+    color: #ffffff;
+    background: #FC466B;
+    background: -webkit-linear-gradient(to right, #3F5EFB, #FC466B);
+    background: linear-gradient(to right, #3F5EFB, #FC466B);
+}
+
+:host ::ng-deep .custom-toast .ui-toast-close-icon {
+    color: #ffffff;
+}
+
+h4 {
+    white-space: nowrap; 
+    width: 100%; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+  }
+
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+    border-color: blue;
+  }
+
+  .side-filter{
+    margin-right: 30px;
+    background: white;
+    height: 50%!important;
+     width: 28%;
+    /* flex-direction: column;
+    box-sizing: border-box;
+    display: flex; */ 
+    padding: 10px;
+    border-radius: 5px;
+    /* height: auto; */
+    box-shadow: 0 1px 2px silver;
+  }
+
+  .filter-kategori::-webkit-scrollbar {
+    width: 5px;
+    }
+
+    .filter-kategori::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+    }
+
+    .filter-kategori:hover::-webkit-scrollbar-thumb {
+        background: silver; 
+      }
+
+  .filter-kategori{
+    padding: 10px;
+    height: 160px;
+    overflow-y: scroll;
+    overflow-x:hidden;
+    width: 100%;
+  }
+
+  .filter-kategori::ng-deep .mat-checkbox .mat-checkbox-frame {
+    border-color: silver;
+    border:1px solid;
+  }
+
+  .mat-checkbox {
+    line-height: 24px;
+    color: black!important;
+}
+
+::ng-deep .mat-checkbox-layout .mat-checkbox-label {
+    line-height: 24px;
+    color: black;
+    /* color: grey; */
+    font-weight: 200;
+}
+
+  ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: #d85252 !important;
+  }
+
+  .lable-kategori {
+    margin-bottom: -10px;
+    margin-top: 10px;
+  }
+
+  .lable-kategori p {
+    font-weight: 500;
+    color: black;
+    font-size: 16px;
+    font-family: serif;
+  }
+
+  .paginator-top .mat-paginator {
+    display: contents!important;
+}
+.icon-sort{
+  padding-left: 5px;
+    font-size: 15px;
+    /* line-height: 34px; */
+    position: relative;
+    top: 3px;
+}
+
+.sort-link:hover{
+  cursor: pointer;
+}
+
+
