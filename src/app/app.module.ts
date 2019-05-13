@@ -8,7 +8,7 @@ import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 import { DataListModule }  from 'primeng/primeng';
 import { AgmCoreModule } from '@agm/core';
-import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { MemberLayoutComponent } from './layouts/member-layout/member-layout.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatRadioModule, MatSelectModule, MatSnackBarModule, MatToolbarModule } from '@angular/material';
@@ -17,6 +17,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { AnggotaRegisterComponent } from './pages/anggota/anggota-register/anggota-register.component';
 import { LoaderInterceptorService } from './service/loader-interceptor.service';
 import { AuthService } from './service/auth.service';
+import { NotificationsComponent } from './pages/notifications/notifications.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -46,10 +47,10 @@ import { AuthService } from './service/auth.service';
   ],
   declarations: [
     AppComponent,
-    AdminLayoutComponent,
+    MemberLayoutComponent,
     LoginComponent,
     RegisterComponent,
-    AnggotaRegisterComponent
+    AnggotaRegisterComponent,
     // DashboardComponent,
   ],
   providers: [{

@@ -4,47 +4,84 @@
 
 <div>
 
-  <div class="container-fluid">
+  <div class="container-fluid" style="margin-bottom:20px">
     <div fxLayout="row" class="link-badge">
-      <a href="#" style="padding-right: 8px;font-size:14px">Dashboard</a>
-      <a href="#" style="padding-right: 8px;font-size:12px">></a>
-      <a href="#" style="font-size:14px">Detail Buku</a>
+      <a routerLink="/dashboard" style="padding-right: 8px;font-size:14px;cursor: pointer;">Dashboard</a>
+      <span style="padding-right: 8px;font-size:12px">></span>
+      <a style="font-size:14px">Detail Buku</a>
     </div>
     <mat-divider></mat-divider>
     <div class="container-detail">
       <div fxLayout="row">
-        <div style="height:300px;background:orange;width:30%" fxLayoutAlign="start center">
-          <div style="width:100%;height:100%;background:white;padding-left:20px;padding-right:20px;padding-top:10px;padding-bottom:10px;">
+        <div style="height:300px;width:30%" fxLayoutAlign="start center">
+          <div style="width:100%;height:100%;padding-left:20px;padding-right:20px;padding-top:10px;padding-bottom:10px;">
             <img src="{{restApi.url + book.path_image}}" width="100%" height="100%" style="border-radius:3px;">
           </div>
         </div>
         <div style="height:300px;width:70%;padding-left:15px" flex="none" fxLayoutAlign="start start">
           <mat-list style="width:100%">
             <mat-list-item style="margin-bottom:10px;">
-              <h3 style="color:#d85252;font-weight:bold;margin-left: -10px;">{{book.judul}}</h3>
+              <h3 class="title-book">{{book.judul}}</h3>
             </mat-list-item>
             <mat-divider></mat-divider>
             <div class="sinopsis">
-              {{book.sinopsis}}
+              <div>{{book.sinopsis}}</div>
+              <div style="margin-top:30px">Pengarang : {{book.pengarang}} </div>
+              <div>Penerbit : {{book.penerbit}} </div>
+              <div fxLayout="row">
+                <div class="col-md-4" style="line-height: 50px;padding-left: 0px;">
+                  <span>Disukai </span>
+                  <mat-icon class="icon-like">thumb_up_alt</mat-icon>
+                  <span>{{book.ratting}} Orang</span>
+                </div>
+
+              </div>
+              <div>
+                <button (click)="gotoEbook(book.kode_buku)" mat-button style="background:orangered;color:white;line-height: 50px;margin-right: 15px">Dapatkan
+                  E-BOOK</button>
+                <!-- <button mat-button style="background:orangered;color:white;line-height: 50px">Lihat Map Buku</button> -->
+              </div>
             </div>
           </mat-list>
         </div>
       </div>
       <div fxLayout="row">
-        <div fxLayout="row" style="height:100px;width:30%" fxLayoutAlign="start center">
-          <div class="col-4" fxFlex="100" fxLayoutAlign="start center">
-            Pengarang : {{book.pengarang}}
+        <div fxLayout="row" style="height:50px;width:30%">
+          <div fxFlex="50" fxLayoutAlign="start center">
+            <!-- Pengarang : {{book.pengarang}}             -->
+          </div>
+          <div fxFlex="50" fxLayoutAlign="end center">
           </div>
           <!-- <div class="col-4" fxFlex="50" fxLayoutAlign="end center">
             Disukai : {{book.ratting}}
           </div> -->
         </div>
-        <div style="height:100px;width:70%;line-height: 100px;" flex="none">
+        <div style="height:50px;width:70%;line-height: 100px;" flex="none">
           <div fxFlex="50" style="padding-left:20px">
-            <button mat-button style="background:orangered;color:white">Dapatkan E-BOOK</button>
+            <!-- <button mat-button style="background:orangered;color:white">Dapatkan E-BOOK</button> -->
           </div>
         </div>
       </div>
     </div>
+    <mat-divider style="margin-bottom:20px;"></mat-divider>
+
+    <div style="width:100%;margin:auto;border:0.5px solid #EEEEEE;background:#EEEEEE;padding:1px;">
+      <mat-carousel  timings="1000ms ease-in" color="#FF5722" [proportion]='25' [hideArrows]="false" style="margin-bottom:100px!important;">
+        <mat-carousel-slide *ngFor="let slide of categoryList" style="padding:20px;">
+          <div fxLayout="row " style="height:100%;width:100%;margin:auto">
+            <div *ngFor="let list of slide" (click)="gotoDetail(list.kode_buku)" class="slide-book">
+              <img src="{{restApi.url + list.path_image}}" width="200px" height="60%" style="margin-bottom:10px;border-radius:3px;margin-top:25px;">
+              <p style="font-size: 14px;color:#d85252">{{list.judul}}</p>
+              <p style="position:relative;top:-15px;font-size: 12px;">{{list.pengarang}}</p>
+            </div>
+          </div>
+        </mat-carousel-slide>
+      </mat-carousel>
+    </div>
+  </div>
+
+
+  <div style="height:100px">
+
   </div>
 </div>

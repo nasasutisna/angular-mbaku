@@ -3,7 +3,7 @@ import { CommonModule, } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { MemberLayoutComponent } from './layouts/member-layout/member-layout.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LoginComponent } from 'app/pages/login/login.component';
 import { RegisterComponent } from 'app/pages/register/register.component';
@@ -16,11 +16,11 @@ const routes: Routes = [
     pathMatch: 'full',
   }, {
     path: '',
-    component: AdminLayoutComponent,
+    component: MemberLayoutComponent,
     children: [
       {
         path: '',
-        loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
+        loadChildren: './layouts/member-layout/member-layout.module#MemberLayoutModule'
       }
     ]
   },

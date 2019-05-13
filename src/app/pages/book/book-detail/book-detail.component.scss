@@ -5,6 +5,48 @@
     margin-top:10px;
 }
 
+.sinopsis{
+    margin-top: 20px;
+}
+
+.icon-like {
+    color: #5194ff;
+    position: relative;
+    top: 5px;
+    padding-left: 5px;
+    padding-right: 30px;
+}
+
 .container-detail {
     margin-top: 20px;
 }
+
+.carousel {
+    background: red;
+    // position: relative;
+}
+
+.container-fluid {
+    width: 100%;
+    padding-right: 50px!important;
+    padding-left: 50px!important;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.carousel-slide::ng-deep .carousel-slide-overlay {
+    background-color: white;
+}
+
+.title-book {
+    color:#d85252;font-weight:bold;margin-left: -10px;
+}
+
+.slide-book {
+    cursor: pointer;text-align:center;height: 100%;width:30%;background:#EEEEEE;
+}
+
+.slide-book:hover{
+    opacity: 0.85;
+}
+

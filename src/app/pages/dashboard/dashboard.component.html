@@ -26,15 +26,15 @@
 			</div>
 
 			<div fxLayout='column' class="filter-kategori" style="margin-bottom:20px;">
-				<mat-checkbox (change)="showSelectedCategory($event)" [formControl]="sortBy">
-					Tampilkan Terpopuler
+				<mat-checkbox [formControl]="populerCheckBox" (change)="showListPopuler($event)">
+					10 Buku Terpopuler
 				</mat-checkbox>
 			</div>
 		</div>
 
 		<div style="width: 100%;">
-			<div  fxLayout='row'>
-				<div fxLayout='row' style="padding-left:15px;padding-right:10px;height:50px;width:58%;">
+			<div fxLayout='row'>
+				<div fxLayout='row' fxFlex="50" fxLayoutAlign="start center" style="padding-right:10px;height:50px;">
 					<div style="line-height:55px;">
 						<b style="font-size:14px;"> Urutkan Berdasarkan :</b>
 					</div>
@@ -45,10 +45,9 @@
 							<mat-icon *ngIf="sortTitle == list.title && upDown == 'desc'" class="icon-sort">arrow_upward</mat-icon>
 						</div>
 					</div>
-
 				</div>
 
-				<div class="paginator-top">
+				<div class="paginator-top" fxFlex="50" fxLayoutAlign="end center">
 					<mat-paginator (page)="pageEvent = handlePage($event)" #paginator style="width: 100%;" [length]="totalSize"
 					 [pageSize]="formData.pageSize" [pageSizeOptions]="[6, 12, 24, 100]">
 					</mat-paginator>
@@ -76,6 +75,21 @@
 					<mat-icon>close</mat-icon>
 				</button>
 			</mat-toolbar> -->
+			<div *ngIf="showPopuler" class="list-populer">
+				<p class="title">10 Buku Terpopuler</p>
+				<mat-carousel  timings="1000ms ease-in" color="#FF5722" [proportion]='20' [hideArrows]="false" style="margin-bottom:100px!important;">
+					<mat-carousel-slide *ngFor="let slide of populerList" style="padding:20px;">
+						<div fxLayout="row " style="height:100%;width:100%;margin:auto;">
+							<div *ngFor="let list of slide" (click)="gotoDetailBook(list.kode_buku)"  class="slide-book">
+								<img src="{{restApi.url + list.path_image}}" width="150px" height="60%" style="margin-bottom:10px;border-radius:3px;margin-top:5px;">
+								<p class="slide-title-book">{{list.judul}}</p>
+								<p style="position:relative;top:-15px;font-size: 12px;">{{list.pengarang}}</p>
+							</div>
+						</div>
+					</mat-carousel-slide>
+				</mat-carousel>
+			</div>
+			<div *ngIf="showPopuler" class="clear"></div>
 			<div class="row" *ngIf="isLoading">
 				<div class="col-md-4" *ngFor="let i of [1,2,3,4,5,6]">
 					<div class="card card-chart" style=" background:white;box-shadow: unset">

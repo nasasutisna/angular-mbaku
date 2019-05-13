@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { GlobalService } from 'app/global.service';
 import { debounceTime } from 'rxjs/operators';
+import { AuthService } from 'app/service/auth.service';
 
 declare interface RouteInfo {
 	path: string;
@@ -14,7 +15,7 @@ declare interface RouteInfo {
 
 export const ROUTES: RouteInfo[] = [
 	{ path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '' },
-	{ path: '/login', title: 'Member Login', icon: 'account_circle', class: '' },
+	{ path: '/login', title: 'Login', icon: 'account_circle', class: '' },
 	// { path: '/table-list', title: 'Table List',  icon:'content_paste', class: '' },
 	// { path: '/typography', title: 'Typography',  icon:'library_books', class: '' },
 	// { path: '/icons', title: 'Icons',  icon:'bubble_chart', class: '' },
@@ -39,19 +40,29 @@ export class NavbarComponent implements OnInit {
 	public positionTop: any = '-8px';
 	private sidebarVisible: boolean;
 	menuItems: any[];
+	isLogin: any;
+	isAdmin: any;
+	isMember: any;
+	userInfo: any;
 
 	constructor(
 		location: Location,
 		private element: ElementRef,
 		private router: Router,
-		public globalService: GlobalService
+		public globalService: GlobalService,
+		public authService: AuthService
 	) {
 		this.location = location;
 		this.sidebarVisible = false;
 	}
 
 	ngOnInit() {
+		this.getUserInfo();
+		this.checkAuth();
+		this.checkChange();
 		this.search();
+		console.log('on init');
+		console.log(ROUTES.values);
 		this.menuItems = ROUTES.filter(menuItem => menuItem);
 		this.listTitles = ROUTES.filter(listTitle => listTitle);
 		const navbar: HTMLElement = this.element.nativeElement;
@@ -150,6 +161,52 @@ export class NavbarComponent implements OnInit {
 		}
 	};
 
+	getUserInfo() {
+		let auth = JSON.parse(localStorage.getItem('authentication'));
+		let user = JSON.parse(localStorage.getItem('user'));
+		if (auth) {
+			this.isLogin = auth.isLogin.status;
+			this.userInfo = user;
+			if (auth.user.userStatus == 1) {
+				this.isAdmin = true;
+				this.isMember = false;
+			} else {
+				this.isAdmin = false;
+				this.isMember = true;
+			}
+		}
+
+		console.log(auth);
+	}	
+
+	checkChange(){
+		this.authService.navbar.subscribe(() => {
+			this.getUserInfo();
+		});
+	}
+
+	checkAuth() {
+		this.authService.auth.subscribe((data: loginInfo<anggota>) => {
+			console.log(data);
+			ROUTES.slice(ROUTES.findIndex(idx => idx.title == 'Daftar Akun'));
+			ROUTES.slice(ROUTES.findIndex(idx => idx.title == 'Member Login'));
+			this.isLogin = true;
+			this.userInfo = data;
+			if (data.user.userStatus) {
+				this.isAdmin = true;
+			}
+			else {
+				this.isMember = true;
+			}
+		})
+	}
+
+	logout() {
+		localStorage.removeItem('authentication');
+		this.isLogin = false;
+		this.router.navigateByUrl("/dashboard");
+	}
+
 	getTitle() {
 		var titlee = this.location.prepareExternalUrl(this.location.path());
 		if (titlee.charAt(0) === '#') {
@@ -175,13 +232,17 @@ export class NavbarComponent implements OnInit {
 				this.positionTop = '-13px';
 			} else {
 				this.positionTop = '-8px';
-			}	
+			}
 		})
-		
+
 		this.keyword.valueChanges.pipe(debounceTime(1500)).subscribe((value) => {
-			
+
 			// console.log('val',this.ke)
 			this.globalService.newEvent(value);
 		})
+	}
+
+	gotoProfile(){
+		this.router.navigateByUrl('/user-profile');
 	}
 }

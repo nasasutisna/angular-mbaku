@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import {Router, ActivatedRoute } from '@angular/router';
 import { RestApiService } from 'app/service/rest-api.service';
 @Component({
   selector: 'app-book-detail',
@@ -9,23 +9,35 @@ import { RestApiService } from 'app/service/rest-api.service';
 export class BookDetailComponent implements OnInit {
 
   book:any;
-
+  categoryList:any;
+  bookId:any;
   constructor(
     private activatedRoute: ActivatedRoute,
+    public router: Router,
     public restApi: RestApiService
-  ) { }
+  ) {
+    this.bookId = this.activatedRoute.snapshot.params['id'];
+   }
 
   ngOnInit() {
-    this.getDetail();
+    this.getDetail(this.bookId);
   }
 
-  getDetail(){
-    let id = this.activatedRoute.snapshot.params['id'];
-
-    this.restApi.getDetailBook(id).subscribe((results) => {
-      console.log(results);
+  getDetail(bookId){
+    this.restApi.getDetailBook(bookId).subscribe((results) => {
       this.book = results;
+      this.restApi.getBookByCategory(this.book.kode_kategori).subscribe((data) => {
+        this.categoryList = data;
+      })
     })
+  }
+
+  gotoEbook(bookId){
+    this.router.navigate(['/ebook/',bookId]);
+  }
+
+  gotoDetail(bookId){
+    this.getDetail(bookId);
   }
 
 }

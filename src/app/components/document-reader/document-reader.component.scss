@@ -1,0 +1,27 @@
+.thumbs-book {
+    width: 250px;
+    // margin-left: -20px; 
+    overflow-y: scroll;
+    height: 55vh;
+    // margin-top: 40px;
+    cursor:pointer
+}
+.pdf-view{
+    // margin-left: -20px;
+    // border: 1px solid red;
+    // padding: 20px;
+    border-radius: 3px;
+}
+
+.thumbs-book::-webkit-scrollbar {
+    width: 7px;
+}
+
+.thumbs-book::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: silver;
+}
+
+.thumbs-book:hover::-webkit-scrollbar-thumb {
+    background: silver; 
+  }

@@ -1,0 +1,50 @@
+.container-fluid {
+    width: 100%;
+    padding-right: 50px!important;
+    padding-left: 50px!important;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .link-badge{
+    height: 50px;
+    line-height: 50px;
+    padding-left: 15px;
+    margin-top:10px;
+}
+
+.link-badge-active {
+  padding-right: 8px;
+  color:#2d8ac4!important;
+  font-size:14px;
+  cursor: pointer;
+}
+
+.link-badge-active:hover {
+  color:#63c3ff!important;
+}
+
+.left-box {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  height:320px;
+  border:1px solid #d85252;border-radius:3px;
+}
+
+.p-side {
+  font-size: 14px;
+  color:#d85252;
+  font-weight: bold;
+}
+
+.title-book {
+  color:#d85252;font-size:18px;font-weight:bold; margin:unset;
+}
+
+.default-like {
+  width:100%;background:#4286f4;color:white;margin-top: 10px;
+}
+
+.after-like {
+  width:100%;border:1px solid #4286f4;color:#4286f4;margin-top: 10px;
+}

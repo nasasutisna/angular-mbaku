@@ -9,6 +9,8 @@ import { IconsComponent } from 'app/icons/icons.component';
 import { MapsComponent } from 'app/pages/maps/maps.component';
 import { NotificationsComponent } from 'app/pages/notifications/notifications.component';
 import { UpgradeComponent } from 'app/pages/upgrade/upgrade.component';
+import { BookEbookViewComponent } from 'app/pages/book-ebook-view/book-ebook-view.component';
+import { BookComponent } from 'app/pages/admin/book/book.component';
 
 export const AdminLayoutRoutes: Routes = [
     // {
@@ -53,14 +55,10 @@ export const AdminLayoutRoutes: Routes = [
     //         component: UpgradeComponent
     //     }]
     // }
-    { path: 'dashboard',      
-        component: DashboardComponent},
-    { path: 'book/:id',           component: BookDetailComponent },
-    { path: 'user-profile',   component: UserProfileComponent },
     { path: 'table-list',     component: TableListComponent },
+    { path: 'book',     component: BookComponent },
     { path: 'typography',     component: TypographyComponent },
     { path: 'icons',          component: IconsComponent },
     { path: 'maps',           component: MapsComponent },
-    { path: 'notifications',  component: NotificationsComponent },
     { path: 'upgrade',        component: UpgradeComponent },
 ];

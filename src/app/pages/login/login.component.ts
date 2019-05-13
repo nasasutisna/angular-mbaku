@@ -29,7 +29,13 @@ export class LoginComponent implements OnInit {
     public notifService: NotifService,
     public router: Router,
     public authService: AuthService
-  ) { }
+  ) { 
+    let auth = JSON.parse(localStorage.getItem('authentication'));
+    if(auth){
+      this.router.navigateByUrl('/dashboard');
+    }
+
+  }
 
   ngOnInit() {
     setTimeout(() => {
@@ -41,8 +47,9 @@ export class LoginComponent implements OnInit {
   processLogin(){
     this.authService.login(this.loginForm.value).then((result:any) => {
       localStorage.setItem('authentication',JSON.stringify(result));
+      localStorage.setItem('user',JSON.stringify(result.user.userInfo));
       this.router.navigate(['/']);
-      this.notifService.showMessage(result.msg,'success');
+      this.notifService.showMessage('Selamat Datang'+' '+result.user.userInfo.nama_lengkap,'success','bottom');
     }).catch((error) => {
       console.log(error);
         this.notifService.showMessage(error.error.msg,'danger');

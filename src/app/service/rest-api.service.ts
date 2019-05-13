@@ -28,6 +28,7 @@ export class RestApiService {
   apiUrl:string = 'http://localhost/api-mbaku/public/api/v1/';
   public url:string = 'http://localhost/api-mbaku/';
   header:any = new HttpHeaders().append('Content-Type', 'application/json');
+  typePdf:any = new HttpHeaders().append('Content-Type', 'application/pdf');
   constructor(public http: HttpClient, public snackBar: MatSnackBar) { }
 
   showMessage(message: string, action: string='Close') {
@@ -58,5 +59,37 @@ export class RestApiService {
 
   registerAccount(criteria:any){
     return this.http.post(this.apiUrl + `anggota/account/register`,JSON.stringify(criteria),{headers:this.header});
+  }
+
+  updateAccount(criteria:any){
+    return this.http.post(this.apiUrl + `anggota/account/update`,JSON.stringify(criteria),{headers:this.header});
+  }
+
+  detailAccount(kode_anggota:any){
+    return this.http.get(this.apiUrl + `anggota/account/detail/${kode_anggota}`);
+  }
+
+  downloadImage(url: string) {
+    return this.http.get(url, { responseType: 'blob' });
+  }
+
+  getBookByCategory(kode_kategori){
+    return this.http.get(this.apiUrl + `book/getBookByCategory/${kode_kategori}`);
+  }
+
+  getPopularBook(){
+    return this.http.get(this.apiUrl + `book/getPopularBook`);
+  }
+
+  getFile(filename: string) {
+    return this.http.post(this.apiUrl + 'book/getEbook',{filename: filename},{responseType : 'blob'});
+  }
+
+  checkMyRate(criteria: any) {
+    return this.http.post(this.apiUrl + 'book/checkMyRate',{kode_anggota: criteria.kode_anggota,kode_buku: criteria.kode_buku});
+  }
+
+  addRatting(criteria: any) {
+    return this.http.post(this.apiUrl + 'book/addRatting',{kode_anggota: criteria.kode_anggota,kode_buku: criteria.kode_buku,ratting:criteria.rate});
   }
 }

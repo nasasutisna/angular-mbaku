@@ -1,27 +1,79 @@
 <div style="background-color:#d85252;height: 55px;width:100%" fxLayout='row'>
-	<div class="logo-img" fxLayoutAlign="start start">
-		<img src="/assets/img/logo.jpeg" height="50" class="img-logo" />
-		<span style="font-size: 20px;color: white">MBAKU</span>
-	</div>
-	<div style="width: 35%;">
-		<mat-form-field style="width:100%;" fxLayout="row">
-			<input #searchInput class="search-input" [ngStyle]="{'top': positionTop}" matInput type="text" tabindex="1" placeholder="Masukkan pencarian..."
-			 [formControl]="keyword">
-			<mat-icon class="icon-close" *ngIf="keyword.value" (click)="clearKeyword()">close</mat-icon>
-		</mat-form-field>
-	</div>
-	<div class="menu" fxLayoutAlign="end start">
-		<ul>
+    <div class="logo-img" fxLayoutAlign="start start">
+        <img src="/assets/img/logo.jpeg" height="50" class="img-logo" />
+        <span style="font-size: 20px;color: white">MBAKU</span>
+    </div>
+    <div style="width: 35%;line-height:43px">
+            <input #searchInput class="search-input" matInput type="text" tabindex="1"
+                placeholder="Masukkan pencarian..." [formControl]="keyword">
+            <mat-icon class="icon-close" *ngIf="keyword.value" (click)="clearKeyword()">close</mat-icon>
+    </div>
+    <div class="menu" fxLayoutAlign="end start">
+        <ul *ngIf="!isLogin">
+            <li routerLinkActive="active" *ngFor="let menuItem of menuItems">
+                <a [routerLink]="[menuItem.path]">
+                    <i class="material-icons">{{menuItem.icon}}</i>
+                    {{menuItem.title}}
+                </a>
+            </li>
+        </ul>
+        <ul *ngIf="isLogin && isMember" style="color:white;">
+            <li routerLinkActive="active">
+                <a routerLink="/dashboard">
+                    <i class="material-icons">dashboard</i>
+                    {{'Dashboard'}}
+                </a>
+            </li>
+            <li routerLinkActive="active">
+                <a mat-button [matMenuTriggerFor]="userMenu">
+                    <i class="material-icons">account_circle</i>
+                    {{userInfo?.nama_lengkap}}
+                </a>
+                <mat-menu #userMenu="matMenu" yPosition="above" style="margin-top:20px;">
+                    <button mat-menu-item (click)="gotoProfile()">Detail Profil</button>
+                    <button mat-menu-item>Histori</button>
+                </mat-menu>
+            </li>
+            <li routerLinkActive="active">
+                <a (click)="logout()">
+                <i class="material-icons">exit_to_app</i>
+                Keluar
+                </a>
+            </li>
+        </ul>
 
-			<li routerLinkActive="active" *ngFor="let menuItem of menuItems">
-				<a [routerLink]="[menuItem.path]">
-					<i class="material-icons">{{menuItem.icon}}</i>
-					{{menuItem.title}}
-				</a>
-			</li>
-		</ul>
+        <ul *ngIf="isLogin && isAdmin" style="color:white;">
+            <li routerLinkActive="active">
+                <a routerLink="/dashboard">
+                    <i class="material-icons">dashboard</i>
+                    {{'Dashboard'}}
+                </a>
+            </li>
+            <li routerLinkActive="active">
+                <a >
+                    <i class="material-icons">dashboard</i>
+                    {{'Transaksi'}}
+                </a>
+            </li>
+            <li routerLinkActive="active">
+                <a mat-button [matMenuTriggerFor]="userMenu">
+                    <i class="material-icons">account_circle</i>
+                    {{userInfo?.nama_lengkap}}
+                </a>
+                <mat-menu #userMenu="matMenu" yPosition="above" style="margin-top:20px;">
+                    <button mat-menu-item (click)="gotoProfile()">Detail Profil</button>
+                    <button mat-menu-item>Histori</button>
+                </mat-menu>
+            </li>
+            <li routerLinkActive="active">
+                <a (click)="logout()">
+                <i class="material-icons">exit_to_app</i>
+                Keluar
+                </a>
+            </li>
+        </ul>
 
-	</div>
+    </div>
 </div>
 
 

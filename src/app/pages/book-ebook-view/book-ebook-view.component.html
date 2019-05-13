@@ -1,0 +1,33 @@
+<div class="container-fluid">
+    <div fxLayout="row" class="link-badge">
+        <a (click)="goto('dashboard')" class="link-badge-active">Dashboard</a>
+        <span style="padding-right: 8px;font-size:12px">></span>
+        <a (click)="goto('detail')" class="link-badge-active">Detail Buku</a>
+        <span style="padding-right: 8px;font-size:12px">></span>
+        <a style="font-size:14px">{{book.judul}}</a>
+    </div>
+    <mat-divider></mat-divider>
+    <div fxLayout="row" style="width:100%;margin-top:30px">
+        <div fxFlex="24" class="left-box">
+            <div style="height:100%;padding:20px">
+                <h3 class="title-book">{{book?.judul}}</h3> 
+                <!-- <h3 style="color:#d85252;font-weight:bold; margin:unset">{{book.ebook}}</h3>  -->
+                <p style="font-size:14px;">Kategori : {{book.kategori}}</p>
+                <p class="p-side">Pengarang : {{book.pengarang}}</p>
+                <p class="p-side">Jumlah Halaman : {{totalPage}}</p>
+                <button (click)="download(book.ebook,book.judul)" mat-button style="width:100%;background:orangered;color:white;">
+                   <mat-icon>get_app</mat-icon> Download Ebook
+                </button>
+                <button (click)="addRatting()" mat-button [ngClass]="{'default-like': !myRate, 'after-like': myRate}">
+                  <mat-icon>thumb_up_alt</mat-icon>  
+                  <span *ngIf="!myRate">Sukai</span>
+                  <span *ngIf="myRate">Anda telah menyukai ini</span>
+                </button>
+            </div>
+        </div>
+        <div fxLayoutAlign="start start" style="margin-left:20px" fxFlex="60">
+            <app-document-reader style="width: 120%;" [bookId]="book.kode_buku" (totalPage)="handlePageEbook($event)" fileName="{{book.ebook}}"></app-document-reader>
+        </div>
+    </div>
+</div>
+<!-- <h1>book view ebook</h1> -->

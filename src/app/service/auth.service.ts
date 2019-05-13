@@ -9,6 +9,7 @@ import { NotifService } from './notif.service';
 
 export class AuthService {
   @Output() auth = new EventEmitter<any>();
+  @Output() navbar = new EventEmitter<void>();
   
   constructor(
     public restApi: RestApiService,

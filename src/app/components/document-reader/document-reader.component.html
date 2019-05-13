@@ -1,0 +1,21 @@
+<div fxLayout="row" style="width:100%">
+<div fxLayout="column" style="margin-bottom:100px;width:100%">
+    <!-- <div>
+        <h5 style="color:#d85252;font-weight: bold">Jumlah Halaman : {{totalPage}}</h5>
+    </div> -->
+    <div class="pdf-view">
+        <pdf-viewer (after-load-complete)="complete($event)" [src]="urlBlob" [zoom]="0.60" [autoresize]="true" [render-text]="true"
+            (on-progress)="onProgress($event)" [(page)]="page" [show-all]='false'></pdf-viewer>
+        <div fxLayoutAlign="center center">
+            <mat-spinner *ngIf="isLoading"></mat-spinner>
+        </div>
+    </div>
+</div>
+<div class="thumbs-book">
+    <pdf-viewer (click)="setPage(i)" *ngFor="let i of [1,2,3,4,5]" [page]="i" [src]="thumbsBlob" [zoom]="0.15"
+     [show-all]='false'></pdf-viewer>
+     <!-- <button style="border:1px solid #d85252;color:#d85252;align-items: center" mat-button fxLayoutAlign="center center">
+         Beli
+     </button> -->
+</div>
+</div>

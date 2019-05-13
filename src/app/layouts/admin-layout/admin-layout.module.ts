@@ -9,7 +9,6 @@ import { TableListComponent } from 'app/pages/table-list/table-list.component';
 import { TypographyComponent } from 'app/pages/typography/typography.component';
 import { IconsComponent } from 'app/icons/icons.component';
 import { MapsComponent } from 'app/pages/maps/maps.component';
-import { NotificationsComponent } from 'app/pages/notifications/notifications.component';
 import { UpgradeComponent } from 'app/pages/upgrade/upgrade.component';
 import { NgxContentLoadingModule } from 'ngx-content-loading';
 import {
@@ -33,10 +32,13 @@ import {
   MatListModule,
   MatPaginatorModule,
 } from '@angular/material';
-
+import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { ToastModule } from 'primeng/toast';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BookDetailComponent } from 'app/pages/book/book-detail/book-detail.component';
+import { BookEbookViewModule } from 'app/pages/book-ebook-view/book-ebook-view.module';
+import { NotificationsComponent } from 'app/pages/notifications/notifications.component';
+import { BookComponent } from 'app/pages/admin/book/book.component';
 
 @NgModule({
   imports: [
@@ -71,18 +73,16 @@ import { BookDetailComponent } from 'app/pages/book/book-detail/book-detail.comp
     MatPaginatorModule,
     MatToolbarModule,
     MatIconModule,
-    
+    BookEbookViewModule,
+    MatCarouselModule
   ],
   declarations: [
-    DashboardComponent,
-    UserProfileComponent,
     TableListComponent,
     TypographyComponent,
     IconsComponent,
     MapsComponent,
-    NotificationsComponent,
     UpgradeComponent,
-    BookDetailComponent,
+    BookComponent,
   ]
 })
 

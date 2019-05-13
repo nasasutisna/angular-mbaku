@@ -43,6 +43,9 @@ export class DashboardComponent implements OnInit {
   }
 
   public totalSize = 0;
+  populerList:any = [];
+  showPopuler:any;
+  populerCheckBox = new FormControl();
 
   constructor(
     public restApi: RestApiService,
@@ -56,6 +59,9 @@ export class DashboardComponent implements OnInit {
     this.getDataBuku();
     this.getCategories();
 
+    this.showPopuler = localStorage.getItem('showPopuler');
+    this.populerCheckBox.setValue(this.showPopuler);
+    console.log(this.populerCheckBox)
     // this.sortByList = [
     //   { title: 'Terpopuler' }, { title: 'Paling Banyak Disukai' }, { title: 'Paling Sedikit Disukai' }, { title: 'Stok Terbanyak' }, { title: 'Stok Terkecil' }
     // ]
@@ -79,7 +85,6 @@ export class DashboardComponent implements OnInit {
   }
 
   public handlePage(e: any) {
-    console.log(e);
     this.formData.pageIndex = e.pageIndex;
     this.formData.pageSize = e.pageSize;
     this.getDataBuku();
@@ -90,8 +95,10 @@ export class DashboardComponent implements OnInit {
     this.restApi.getDataBuku(this.formData).subscribe((results: any) => {
       this.bukuList = results.data;
       this.totalSize = results.totalPage;
-      console.log(results);
       this.isLoading = false;
+      this.restApi.getPopularBook().subscribe((data) => {
+        this.populerList = data;
+      })
     },
       err => {
         this.showMessage('Data gagal diload, Silahkan cek koneksi anda');
@@ -191,6 +198,15 @@ export class DashboardComponent implements OnInit {
     this.sortColor ='#c14345';
     this.formData.sortBy = e.value + '|' + this.upDown;
     this.getDataBuku();
+  }
+
+  showListPopuler(e){
+    this.showPopuler = e.checked;
+    if(e.checked){
+      localStorage.setItem('showPopuler',e.checked);
+    }else{
+      localStorage.removeItem('showPopuler');
+    }
   }
 
   startAnimationForLineChart(chart) {
