@@ -12,11 +12,22 @@
             <div style="height:100%;padding:20px">
                 <h3 class="title-book">{{book?.judul}}</h3> 
                 <!-- <h3 style="color:#d85252;font-weight:bold; margin:unset">{{book.ebook}}</h3>  -->
-                <p style="font-size:14px;">Kategori : {{book.kategori}}</p>
-                <p class="p-side">Pengarang : {{book.pengarang}}</p>
+                <p style="font-size:14px;">Kategori : {{book?.kategori}}</p>
+                <p style="font-size:14px;">Harga eBook : {{(book?.harga_ebook > 0 ? 'IDR '+ book?.harga_ebook : 'Gratis')}}</p>
+                <p class="p-side">Pengarang : {{book?.pengarang}}</p>
                 <p class="p-side">Jumlah Halaman : {{totalPage}}</p>
-                <button (click)="download(book.ebook,book.judul)" mat-button style="width:100%;background:orangered;color:white;">
+                <button *ngIf="book?.harga_ebook == 0 || isSettlement" (click)="download(book.ebook,book.judul)" mat-button style="width:100%;background:orangered;color:white;">
                    <mat-icon>get_app</mat-icon> Download Ebook
+                </button>
+
+                <button  *ngIf="isFirst && !isSettlement" (click)="openSnap()" mat-button style="width:100%;background:orangered;color:white;margin-top:5px;margin-bottom:5px;">
+                   <mat-icon>shopping_cart</mat-icon> 
+                   <span>Beli eBook</span> 
+                </button>
+
+                <button *ngIf="book.harga_ebook > 0 && isPendingPayment" (click)="gotoHistory()" mat-button style="width:100%;background:orangered;color:white;margin-top:5px;margin-bottom:5px;">
+                   <mat-icon>history</mat-icon> 
+                   <span>Menunggu pembayaran...</span> 
                 </button>
                 <button (click)="addRatting()" mat-button [ngClass]="{'default-like': !myRate, 'after-like': myRate}">
                   <mat-icon>thumb_up_alt</mat-icon>  
@@ -26,7 +37,7 @@
             </div>
         </div>
         <div fxLayoutAlign="start start" style="margin-left:20px" fxFlex="60">
-            <app-document-reader style="width: 120%;" [bookId]="book.kode_buku" (totalPage)="handlePageEbook($event)" fileName="{{book.ebook}}"></app-document-reader>
+            <app-document-reader style="width: 120%;" [bookId]="book?.kode_buku" (totalPage)="handlePageEbook($event)" fileName="{{book.ebook}}"></app-document-reader>
         </div>
     </div>
 </div>

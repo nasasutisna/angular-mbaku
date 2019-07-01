@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DocumentReaderComponent } from './document-reader/document-reader.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { SidebarMenuComponent } from './sidebar-menu/sidebar-menu.component';
 @NgModule({
   imports: [
     FormsModule,
@@ -36,7 +37,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     SidebarComponent,
     ImageComponentComponent,
     LoaderComponent,
-    DocumentReaderComponent
+    DocumentReaderComponent,
+    SidebarMenuComponent
   ],
   exports: [
     FooterComponent,

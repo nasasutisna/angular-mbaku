@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { RestApiService } from 'app/service/rest-api.service';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
@@ -11,8 +11,13 @@ import { AuthService } from 'app/service/auth.service';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
+
+  @ViewChild('fileInput') fileInput;
+
   user: any;
   formData = new FormGroup({});
+  file:any;
+  image: any;
 
   constructor(public router: Router, public authService: AuthService, public fb: FormBuilder, public restApi: RestApiService, public notifService: NotifService) { }
 
@@ -30,6 +35,7 @@ export class UserProfileComponent implements OnInit {
         email: [user.email],
         nomor_handphone: [user.nomor_handphone],
         alamat: [user.alamat],
+        photo: ['']
       });
     }
     else{
@@ -39,6 +45,7 @@ export class UserProfileComponent implements OnInit {
         email: [''],
         nomor_handphone: [''],
         alamat: [''],
+        photo: ['']
       });
     }
   }
@@ -47,6 +54,7 @@ export class UserProfileComponent implements OnInit {
     let auth = JSON.parse(localStorage.getItem('authentication'));
     this.restApi.detailAccount(auth.user.userInfo.kode_anggota).subscribe((result: any) => {
       this.user = result;
+      this.image = this.restApi.url + this.user.photo;
       localStorage.setItem('user', JSON.stringify(result));
       this.defineForm(this.user);
       this.authService.navbar.emit();
@@ -56,14 +64,35 @@ export class UserProfileComponent implements OnInit {
   }
 
   updateProfile() {
-    console.log(this.formData);
-    this.restApi.updateAccount(this.formData.value).subscribe((result: any) => {
+    let params = {
+      serial_id: this.user.serial_id
+    }
+
+    params = Object.assign(this.formData.value,params);
+    this.restApi.updateAccount(params).subscribe((result: any) => {
       this.notifService.showMessage(result.msg, 'success', 'bottom');
       this.getDetailData();
     }, err => {
         console.log(err);
         this.notifService.showMessage(err.error.msg, 'warning', 'bottom');
       });
+  }
+
+  browseImage(){
+    this.fileInput.nativeElement.click();
+  }
+
+  processWebImage(event) {
+    var reader = new FileReader();
+    this.file = event.target.files[0];
+    console.log('file',this.file)
+    this.formData.get("photo").setValue(this.file);
+
+    reader.readAsDataURL(event.target.files[0]); // read file as data url
+    reader.onload = (event:any) => { // called once readAsDataURL is completed
+      this.image = event.target.result
+    }
+
   }
 
 }

@@ -38,6 +38,10 @@ h4 {
     box-shadow: 0 1px 2px silver;
   }
 
+  .label-filter{
+    line-height:55px;
+  }
+
   .filter-kategori::-webkit-scrollbar {
     width: 5px;
     }
@@ -83,11 +87,21 @@ h4 {
   
 .container-fluid {
   width: 100%;
-  padding-right: 50px!important;
-  padding-left: 50px!important;
+  padding-right: 50px;
+  padding-left: 50px;
   margin-right: auto;
   margin-left: auto;
 }
+
+.container-fluid-mobile {
+  width: 100%;
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+
   .lable-kategori {
     margin-bottom: -10px;
     margin-top: 10px;
@@ -149,4 +163,43 @@ h4 {
 .list-populer{
   width:100%;height:180px;margin:auto;border:0.5px solid #EEEEEE;background:#EEEEEE;padding:1px;
 }
+
+.sort-by{
+  padding-left:20px;line-height:55px;font-size: 12px;
+}
+
+@media screen and (max-width: 990px) {
+  .mat-paginator-page-size-label{
+    display: none;
+  }
+}
+
+@media screen and (max-width: 765px) {
+ .side-filter{
+   display: none!important;
+ }
+
+ .label-filter{
+  display: none;
+}
+}
+
+@media screen and (max-width: 865px) {
+
+ .label-filter{
+  display: none;
+}
+
+}
+
+@media screen and (max-width: 350px) {
+  .container-fluid {
+    width: 100%;
+    padding-right: unset!important;
+    padding-left: unset!important;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
 

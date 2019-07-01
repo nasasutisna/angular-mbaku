@@ -1,0 +1,90 @@
+p{
+    margin-top:0!important;
+    margin-bottom:0!important;
+}
+
+.history-order{
+    // border:1px solid silver;
+    height:85vh;
+    padding-left:30px;
+    padding-top:30px;
+    // padding-left:50px
+}
+
+.header-title{
+    margin-bottom:20px;
+    h3{
+        font-weight: bold;
+    }
+}
+
+.title {
+    padding-top:10px;
+}
+
+.content-order{
+    border: 1px solid silver;
+    margin-bottom: 10px;
+    margin-right: 20px;
+    padding:5px;
+}
+
+.content-left{
+    align-content: center;
+    min-height: 200px;
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+.cancel-order{
+    cursor: pointer;
+}
+
+.cancel-order:hover{
+    cursor: pointer;
+    background: silver;
+    padding: 10px
+}
+.btn-download{
+    padding:5px;
+    background:#3B9D9A;
+    color:white;
+    border:none;
+    border-radius: 3px;
+    font-size: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+.btn-download:hover{
+    background:#5DC7BD;
+}
+.btn-cancel{
+    padding:5px;
+    background:#DF554B;
+    color:white;
+    border:none;
+    border-radius: 3px;
+    font-size: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+.btn-cancel:hover{
+    background:#ca5254;
+}
+
+.title-book{
+    font-weight: bold;
+}
+
+.title-other{
+    font-size: 14px;
+}
+
+.transaction_time{
+    font-size: 12px;
+    color: grey;
+}

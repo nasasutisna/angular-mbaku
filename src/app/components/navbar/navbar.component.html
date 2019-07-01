@@ -1,14 +1,16 @@
-<div style="background-color:#d85252;height: 55px;width:100%" fxLayout='row'>
-    <div class="logo-img" fxLayoutAlign="start start">
-        <img src="/assets/img/logo.jpeg" height="50" class="img-logo" />
-        <span style="font-size: 20px;color: white">MBAKU</span>
+<!-- DESKSTOP -->
+<div class="content-navbar" fxLayout='row'>
+    <div *ngIf="screen > 748" class="logo-img" fxLayoutAlign="start start" [ngStyle]="{'display': screen < 748 ? 'none' : 'block'}">
+        <img src="/assets/img/logo-new.png" class="img-logo" />
+        <!-- <span style="font-size: 20px;color: white">MBAKU</span> -->
     </div>
-    <div style="width: 35%;line-height:43px">
-            <input #searchInput class="search-input" matInput type="text" tabindex="1"
-                placeholder="Masukkan pencarian..." [formControl]="keyword">
-            <mat-icon class="icon-close" *ngIf="keyword.value" (click)="clearKeyword()">close</mat-icon>
+    <div *ngIf="screen > 748" style="width: 35%;line-height:43px">
+        <input #searchInput class="search-input" matInput type="text" tabindex="1" placeholder="Cari judul , pengarang..."
+            [formControl]="keyword">
+        <mat-icon class="icon-close" *ngIf="keyword.value" (click)="clearKeyword()">close</mat-icon>
+        <mat-icon class="icon-close" *ngIf="!keyword.value">search</mat-icon>
     </div>
-    <div class="menu" fxLayoutAlign="end start">
+    <div class="menu" fxLayoutAlign="start start">
         <ul *ngIf="!isLogin">
             <li routerLinkActive="active" *ngFor="let menuItem of menuItems">
                 <a [routerLink]="[menuItem.path]">
@@ -31,13 +33,13 @@
                 </a>
                 <mat-menu #userMenu="matMenu" yPosition="above" style="margin-top:20px;">
                     <button mat-menu-item (click)="gotoProfile()">Detail Profil</button>
-                    <button mat-menu-item>Histori</button>
+                    <button mat-menu-item (click)="gotoHistory()">Riwayat Pembelian</button>
                 </mat-menu>
             </li>
             <li routerLinkActive="active">
                 <a (click)="logout()">
-                <i class="material-icons">exit_to_app</i>
-                Keluar
+                    <i class="material-icons">exit_to_app</i>
+                    Keluar
                 </a>
             </li>
         </ul>
@@ -50,7 +52,7 @@
                 </a>
             </li>
             <li routerLinkActive="active">
-                <a >
+                <a>
                     <i class="material-icons">dashboard</i>
                     {{'Transaksi'}}
                 </a>
@@ -67,8 +69,8 @@
             </li>
             <li routerLinkActive="active">
                 <a (click)="logout()">
-                <i class="material-icons">exit_to_app</i>
-                Keluar
+                    <i class="material-icons">exit_to_app</i>
+                    Keluar
                 </a>
             </li>
         </ul>
@@ -76,20 +78,21 @@
     </div>
 </div>
 
-
-<!-- <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute fixed-top">
+<!-- MOBILE -->
+<nav *ngIf="screen < 748" class="navbar navbar-expand-lg navbar-transparent  navbar-absolute fixed-top">
     <div class="container-fluid">
         <div class="navbar-wrapper">
-          <a class="navbar-brand" href="#">{{getTitle()}}</a>
+            <a class="navbar-brand logo" href="#"> <img src="/assets/img/logo-new.png" class="img-logo2" />
+            </a>
         </div>
-        <button mat-raised-button class="navbar-toggler" type="button" (click)="sidebarToggle()">
+        <button mat-raised-button class="navbar-toggler menu-bar" type="button" (click)="sidebarToggle()">
             <span class="sr-only">Toggle navigation</span>
             <span class="navbar-toggler-icon icon-bar"></span>
             <span class="navbar-toggler-icon icon-bar"></span>
             <span class="navbar-toggler-icon icon-bar"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navigation">
-             <form class="navbar-form">
+            <form class="navbar-form">
                 <div class="input-group no-border">
                     <input type="text" value="" class="form-control" placeholder="Search...">
                     <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon">
@@ -97,18 +100,19 @@
                         <div class="ripple-container"></div>
                     </button>
                 </div>
-            </form> -->
-<!-- <ul class="navbar-nav"> -->
-<!-- <li class="nav-item">
+            </form>
+            <ul class="navbar-nav">
+                <li class="nav-item">
                     <a class="nav-link" href="#pablo">
                         <i class="material-icons">dashboard</i>
                         <p>
                             <span class="d-lg-none d-md-block">Stats</span>
                         </p>
                     </a>
-                </li> -->
-<!-- <li class="nav-item dropdown">
-                    <a class="nav-link" href="#pablo" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#pablo" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
                         <i class="material-icons">notifications</i>
                         <span class="notification">5</span>
                         <p>
@@ -130,14 +134,13 @@
                             <span class="d-lg-none d-md-block">Account</span>
                         </p>
                     </a>
-                </li> -->
-<!-- </ul>
+                </li>
+            </ul>
         </div>
     </div>
-</nav> -->
+</nav>
 
-<!--
-
+<!-- 
 <nav class="navbar navbar-transparent navbar-absolute">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -190,4 +193,4 @@
             </form>
         </div>
     </div>
-</nav> -->
+</nav>  -->

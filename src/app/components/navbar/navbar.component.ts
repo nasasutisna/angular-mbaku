@@ -44,6 +44,7 @@ export class NavbarComponent implements OnInit {
 	isAdmin: any;
 	isMember: any;
 	userInfo: any;
+	screen: any;
 
 	constructor(
 		location: Location,
@@ -54,6 +55,7 @@ export class NavbarComponent implements OnInit {
 	) {
 		this.location = location;
 		this.sidebarVisible = false;
+		this.screen = screen.width;
 	}
 
 	ngOnInit() {
@@ -67,6 +69,7 @@ export class NavbarComponent implements OnInit {
 		this.listTitles = ROUTES.filter(listTitle => listTitle);
 		const navbar: HTMLElement = this.element.nativeElement;
 		this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
+		console.log('class',navbar.getElementsByClassName('navbar-toggler'))
 		this.router.events.subscribe((event) => {
 			this.sidebarClose();
 			var $layer: any = document.getElementsByClassName('close-layer')[0];
@@ -94,6 +97,7 @@ export class NavbarComponent implements OnInit {
 		body.classList.add('nav-open');
 
 		this.sidebarVisible = true;
+		console.log(this.toggleButton);
 	};
 
 	sidebarClose() {
@@ -244,5 +248,9 @@ export class NavbarComponent implements OnInit {
 
 	gotoProfile(){
 		this.router.navigateByUrl('/user-profile');
+	}
+
+	gotoHistory(){
+		this.router.navigateByUrl('/history');
 	}
 }

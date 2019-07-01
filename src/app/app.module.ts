@@ -17,7 +17,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { AnggotaRegisterComponent } from './pages/anggota/anggota-register/anggota-register.component';
 import { LoaderInterceptorService } from './service/loader-interceptor.service';
 import { AuthService } from './service/auth.service';
-import { NotificationsComponent } from './pages/notifications/notifications.component';
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,

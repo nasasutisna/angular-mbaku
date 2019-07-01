@@ -6,11 +6,9 @@ import { MemberLayoutRoutes } from './member-layout.routing';
 import { DashboardComponent } from 'app/pages/dashboard/dashboard.component';
 import { UserProfileComponent } from 'app/pages/user-profile/user-profile.component';
 import { TableListComponent } from 'app/pages/table-list/table-list.component';
-import { TypographyComponent } from 'app/pages/typography/typography.component';
 import { IconsComponent } from 'app/icons/icons.component';
 import { MapsComponent } from 'app/pages/maps/maps.component';
 import { NotificationsComponent } from 'app/pages/notifications/notifications.component';
-import { UpgradeComponent } from 'app/pages/upgrade/upgrade.component';
 import { NgxContentLoadingModule } from 'ngx-content-loading';
 import {
   MatButtonModule,
@@ -38,6 +36,8 @@ import { ToastModule } from 'primeng/toast';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BookDetailComponent } from 'app/pages/book/book-detail/book-detail.component';
 import { BookEbookViewModule } from 'app/pages/book-ebook-view/book-ebook-view.module';
+import { BookComponent } from 'app/pages/admin/book/book.component';
+import { HistoryComponent } from 'app/pages/history/history.component';
 
 @NgModule({
   imports: [
@@ -79,6 +79,10 @@ import { BookEbookViewModule } from 'app/pages/book-ebook-view/book-ebook-view.m
     DashboardComponent,
     UserProfileComponent,
     BookDetailComponent,
+    NotificationsComponent,
+    BookComponent,
+    HistoryComponent,
+    IconsComponent
   ]
 })
 

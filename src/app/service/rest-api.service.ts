@@ -29,6 +29,10 @@ export class RestApiService {
   public url:string = 'http://localhost/api-mbaku/';
   header:any = new HttpHeaders().append('Content-Type', 'application/json');
   typePdf:any = new HttpHeaders().append('Content-Type', 'application/pdf');
+  
+  // LINK MIDTRANS
+  urlTransaction = 'https://app.sandbox.midtrans.com/snap/v1/transactions';
+  authTransaction = "Basic U0ItTWlkLXNlcnZlci1JWlRnMUxMWTlGQjl0VF9JcXV6LWt3em46";
   constructor(public http: HttpClient, public snackBar: MatSnackBar) { }
 
   showMessage(message: string, action: string='Close') {
@@ -38,7 +42,7 @@ export class RestApiService {
   }
 
   getDataBuku(criteria:any){
-    return this.http.get(this.apiUrl + `dashboard/getBookList?pageIndex=${criteria.pageIndex}&pageSize=${criteria.pageSize}&sortBy=${criteria.sortBy}&category=${criteria.category}&keyword=${criteria.keyword}`);
+    return this.http.get(this.apiUrl + `dashboard/getBookList?pageIndex=${criteria.pageIndex}&pageSize=${criteria.pageSize}&filterEbook=${criteria.filterEbook}&sortBy=${criteria.sortBy}&category=${criteria.category}&keyword=${criteria.keyword}`);
   }
 
   getCategories(){
@@ -52,6 +56,7 @@ export class RestApiService {
   processLogin(criteria:any){
     return this.http.post<loginInfo<anggota>>(this.apiUrl + `login`,JSON.stringify(criteria),{headers:this.header});
   }
+  
 
   registerAnggota(criteria:any){
     return this.http.post(this.apiUrl + `anggota/daftar`,JSON.stringify(criteria),{headers:this.header});
@@ -62,8 +67,21 @@ export class RestApiService {
   }
 
   updateAccount(criteria:any){
-    return this.http.post(this.apiUrl + `anggota/account/update`,JSON.stringify(criteria),{headers:this.header});
+
+    const formData = new FormData();
+
+    formData.append('serial_id', criteria.serial_id);
+    formData.append('kode_anggota', criteria.kode_anggota);
+    formData.append('nama_lengkap', criteria.nama_lengkap);
+    formData.append('alamat', criteria.alamat);
+    formData.append('nomor_handphone', criteria.nomor_handphone);
+    formData.append('email', criteria.email);
+    formData.append('status', criteria.status);
+    formData.append('photo', criteria.photo);
+   
+    return this.http.post(this.apiUrl + `anggota/account/update`,formData);
   }
+
 
   detailAccount(kode_anggota:any){
     return this.http.get(this.apiUrl + `anggota/account/detail/${kode_anggota}`);
@@ -92,4 +110,38 @@ export class RestApiService {
   addRatting(criteria: any) {
     return this.http.post(this.apiUrl + 'book/addRatting',{kode_anggota: criteria.kode_anggota,kode_buku: criteria.kode_buku,ratting:criteria.rate});
   }
+
+  orderEbook(criteria:any){
+    // let header = new HttpHeaders().append('Content-Type', 'application/json').append('Accept','application/json').append('Authorization',this.authTransaction);
+    return this.http.post(this.apiUrl+'transaksi/order',criteria,{headers:this.header});
+  }
+
+  checkStatusOrder(token){
+    return this.http.get(this.apiUrl+`transaksi/status/${token}`);
+  }
+
+  getOrderByAnggota(kode_anggota){
+    return this.http.get(this.apiUrl+`transaksi/order/getByAnggota/${kode_anggota}`);
+  }
+
+  cancelOrder(orderId){
+    return this.http.get(this.apiUrl+`transaksi/order/cancel/${orderId}`);
+  }
+
+  transactionStore(criteria){
+    return this.http.post(this.apiUrl+`transaksi/order/store`,criteria,{headers:this.header});
+  }
+
+  checkOrderPending(criteria){
+    return this.http.post(this.apiUrl+`transaksi/order/pending`,criteria,{headers:this.header});
+  }
+
+  checkOrderBookPending(criteria){
+    return this.http.post(this.apiUrl+`transaksi/order/book/pending`,criteria,{headers:this.header});
+  }
+
+  updateOrder(criteria){
+    return this.http.post(this.apiUrl+`transaksi/order/update`,criteria,{headers:this.header});
+  }
+
 }

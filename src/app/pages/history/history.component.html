@@ -1,0 +1,46 @@
+<div class="container-fluid" >
+  <div fxLayout="row" fxLayout.lt-sm="column" >
+    <div fxFlex="100" class="history-order">
+      <div class="header-title">
+        <h3>Riwayat Pembelian</h3>
+      </div>
+      <div fxLayout="column" class="content-left">
+        <div class="content-order" fxLayout="row" fxLayout.lt-sm="column" *ngFor="let list of orderList">
+          <div fxFlex="15" style="text-align:center">
+            <img src="{{restApi.url + list?.path_image}}" onError="this.src ='../../../assets/img/maskot-new.png'" style="height:100px;width:100px" alt="">
+          </div>
+          <div fxFlex="55" >
+             <div class="title">
+              <p class="title-book">{{list?.judul}}</p>
+              <p class="title-other">{{list?.judul_kategori}}</p>
+              <div style="position:relative;top:10px;font-size:14px">
+                Status : 
+                <b  [ngStyle]="{'color': list?.transaction_status == 'pending' || list?.transaction_status == 'cancel' ? 'red' : '#3B9D9A'}">
+                  {{list?.transaction_status == 'settlement' ? 'Lunas' : list?.transaction_status == 'pending' ? 'Menunggu Pembayaran' : 'Pesanan telah dibatalkan'}}
+                </b>
+              </div>
+             </div>
+          </div>
+          <div fxFlex="25" class="title transaction_time" fxLayoutAlign="end start">
+            {{list?.transaction_time}} 
+          </div>
+          <div fxFlex="15" fxLayoutAlign="center center">
+            <div *ngIf="list?.transaction_status == 'pending'">
+              <button matButton *ngIf="!isCancel" (click)="cancelConfirm()" class="btn-cancel">Batalkan</button>
+              <button matButton *ngIf="isCancel" (click)="cancelLose()" class="btn-cancel" style="margin-right:5px;background:#3B9D9A">Tidak</button>
+              <button matButton *ngIf="isCancel" (click)="cancelOrder(list?.order_id)" class="btn-cancel">Yakin ?</button>
+            </div>
+            <div *ngIf="list?.transaction_status == 'settlement'">
+              <button matButton class="btn-download" (click)="download(list?.ebook,list?.judul)">Download</button>
+            </div>
+          </div>
+        </div>
+      
+   
+      </div>
+    </div>
+    <div fxFlex="20">
+
+    </div>
+  </div>
+</div>

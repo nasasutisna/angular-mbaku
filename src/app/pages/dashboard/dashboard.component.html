@@ -3,7 +3,7 @@
 </mat-toolbar> -->
 <div style="margin-top:40px;margin-bottom:50px">
 
-	<div class="container-fluid" fxLayout='row'>
+	<div class="container-fluid" fxLayout='row' [ngClass]="{'container-fluid-mobile': isMobile}">
 		<div fxLayout='column' class="side-filter">
 			<div class="lable-kategori">
 				<p style="margin-top: -10px;">FILTERS</p>
@@ -26,6 +26,9 @@
 			</div>
 
 			<div fxLayout='column' class="filter-kategori" style="margin-bottom:20px;">
+				<mat-checkbox [formControl]="filterEbookCheckBox" (change)="filterEbookAction($event)">
+					Ebook
+				</mat-checkbox>
 				<mat-checkbox [formControl]="populerCheckBox" (change)="showListPopuler($event)">
 					10 Buku Terpopuler
 				</mat-checkbox>
@@ -35,10 +38,10 @@
 		<div style="width: 100%;">
 			<div fxLayout='row'>
 				<div fxLayout='row' fxFlex="50" fxLayoutAlign="start center" style="padding-right:10px;height:50px;">
-					<div style="line-height:55px;">
+					<div class="label-filter">
 						<b style="font-size:14px;"> Urutkan Berdasarkan :</b>
 					</div>
-					<div fxLayout="row" *ngFor="let list of sortByList" style="padding-left:20px;line-height:55px;font-size: 12px;">
+					<div fxLayout="row" *ngFor="let list of sortByList" class="sort-by">
 						<div class="sort-link" (click)="sortingProcess(list)" [ngStyle]="{'color': sortTitle == list.title ? sortColor : ''}">
 							<span>{{list.title}}</span>
 							<mat-icon *ngIf="sortTitle == list.title && upDown == 'asc'" class="icon-sort">arrow_downward</mat-icon>
@@ -47,9 +50,9 @@
 					</div>
 				</div>
 
-				<div class="paginator-top" fxFlex="50" fxLayoutAlign="end center">
-					<mat-paginator (page)="pageEvent = handlePage($event)" #paginator style="width: 100%;" [length]="totalSize"
-					 [pageSize]="formData.pageSize" [pageSizeOptions]="[6, 12, 24, 100]">
+				<div class="paginator-top" fxFlex="50" fxLayoutAlign="end center" [hidden]="isMobile">
+					<mat-paginator class="marginless-paginator-range-label" [hidePageSize]="true" (page)="pageEvent = handlePage($event)" #paginator style="width: 100%;" [length]="totalSize"
+					 [pageSize]="formData.pageSize">
 					</mat-paginator>
 				</div>
 			</div>
@@ -118,7 +121,7 @@
 							<div style="margin-top:15px;">
 								<p class="card-category" style="float:left;">Stok : {{book.stok}}</p>
 								<p class="card-category" style="float:right;position:relative">
-									<mat-icon style="color:#5194ff">thumb_up_alt</mat-icon> {{book.ratting}}
+									<mat-icon style="color:silver">thumb_up</mat-icon> {{book.ratting}}
 								</p>
 							</div>
 						</div>
@@ -146,7 +149,7 @@
 				</div>
 			</div> -->
 				<mat-paginator (page)="pageEvent = handlePage($event)" #paginator style="width: 100%;background: unset;margin-bottom:50px"
-				 [length]="totalSize" [pageSize]="formData.pageSize" [pageSizeOptions]="[6, 12, 24, 100]">
+				 [length]="totalSize" [pageSizeOptions]="[6, 12, 24, 100]">
 				</mat-paginator>
 
 			</div>

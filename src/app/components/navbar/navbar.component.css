@@ -9,10 +9,19 @@
   }
 
   .img-logo {
-        /* margin-top: -10px; */
-        padding-right: 20px;
-        height: 100%;
-        width: 32%;
+    padding-right: 20px;
+    height: 100px;
+    width: 100%;
+    position: relative;
+    top: -25px;
+  }
+  .img-logo2 {
+    padding-right: 20px;
+    left: -20px;
+    height: 100px;
+    width: 200%;
+    position: relative;
+    top: -35px;
   }
 
   .mat-toolbar-multiple-rows {
@@ -110,7 +119,7 @@
 
 .mat-toolbar-multiple-rows[_ngcontent-c3] {
     min-height: 50px;
-    background-color: #d85252;
+    background-color: #DF554B;
 }
 
 .mat-toolbar-row[_ngcontent-c3], .mat-toolbar-single-row[_ngcontent-c3] {
@@ -125,5 +134,61 @@
        margin-left: 50px;
        width: 22%;
        margin-right: 15px;
+
+}
+
+.menu[_ngcontent-c3] {
+  height: 100%;
+  width: 40%;
+  margin-right: 50px;
+}
+
+
+.content-navbar{
+  background-color:#DF554B;height: 55px;width:100%
+}
+
+.btn-bar {
+  /* background: transparent;border:none;color:white;cursor: pointer;margin-top: 5px
+   */
+   display: none;
+}
+
+.btn-menu-bar {
+  display: none;
+}
+
+.icon-bar{
+  color:white;
+}
+
+.logo{
+  width: 100px;
+    /* height: 18%; */
+    /* background: white; */
+    /* height: 21px; */
+    position: relative;
+    top: -10px;
+    height: 55px;
+}
+
+.menu-bar{
+  height: 35px;
+    position: relative;
+    top: -10px;
+    color: white;
+}
+
+@media screen and (max-width: 1040px) {
+  .menu {
+    display: none!important;
+  }
+
+  .btn-menu-bar {
+    display: inline-block;
+  }
+
+  
+  
 
 }
