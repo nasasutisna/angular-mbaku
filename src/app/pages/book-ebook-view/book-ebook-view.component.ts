@@ -21,7 +21,7 @@ export class BookEbookViewComponent implements OnInit {
   myRate: any = 0;
   isPendingPayment: boolean=false;
   isFirst: boolean=true;
-  isSettlement: boolean=true;
+  isSettlement: boolean=false;
 
   statusOrder:any = {};
   paramsOrder = {
@@ -83,22 +83,20 @@ export class BookEbookViewComponent implements OnInit {
     this.restApi.orderEbook(this.paramsOrder).subscribe((result:any) => {
       snap.pay(result.token, {
         onSuccess: (response) =>{
-          console.log('suscess');
-          console.log(response);
-          this.getStatusOrder(result.token);
-
+          console.log('sukses');
+          this.getStatusOrder(response.token);
           this.ngZone.run(() => {
             this.isSettlement = true;
           }) 
         },
         onPending: (response) =>{
-          this.getStatusOrder(result.token);
-          console.log('pending');
-          console.log(response);
+          console.log('sukses 2');
+          if(response.payment_type != 'gopay'){
+            console.log('sukses 3');
+            this.getStatusOrder(response.token);
+          }
         },
         onError: (response)=>{
-          console.log('error');
-          console.log(response);
         },
         onClose: ()=>{
           console.log('customer closed the popup without finishing the payment')
@@ -125,13 +123,17 @@ export class BookEbookViewComponent implements OnInit {
            this.isFirst = false;
            this.intervalCheckStatus = setInterval(() => {
             this.restApi.checkStatusOrder(element.transaction_token).subscribe((result:any) => {
-              if(result.transaction_status != 'pending'){
+              if(result.transaction_status == 'settlement'){
                 this.isPendingPayment = false;
                 let params = {
-                  transaction_token: result.transaction_token,
+                  transaction_token: result.token,
                   transaction_status: result.transaction_status,
                 }
-        
+                
+                this.isSettlement = true
+                this.isPendingPayment = false
+                this.isFirst = false
+
                 this.restApi.updateOrder(params).subscribe((result) => {
                 })
                 clearInterval(this.intervalCheckStatus);
@@ -153,7 +155,6 @@ export class BookEbookViewComponent implements OnInit {
         });
        }
        else{
-         console.log('masuk sini true')
         this.isFirst = true;
         this.isPendingPayment = false;
         this.isSettlement = false;

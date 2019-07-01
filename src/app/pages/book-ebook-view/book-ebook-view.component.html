@@ -17,7 +17,7 @@
                 <p class="p-side">Pengarang : {{book?.pengarang}}</p>
                 <p class="p-side">Jumlah Halaman : {{totalPage}}</p>
                 <button *ngIf="book?.harga_ebook == 0 || isSettlement" (click)="download(book.ebook,book.judul)" mat-button style="width:100%;background:orangered;color:white;">
-                   <mat-icon>get_app</mat-icon> Download Ebook
+                   <mat-icon>get_app</mat-icon> Download eBook
                 </button>
 
                 <button  *ngIf="isFirst && !isSettlement" (click)="openSnap()" mat-button style="width:100%;background:orangered;color:white;margin-top:5px;margin-bottom:5px;">
