@@ -1,7 +1,7 @@
 <div class="container-fluid" >
-  <div fxLayout="row" fxLayout.lt-sm="column" >
+  <div fxLayout="row" fxLayout.lt-sm="column"  *ngIf="orderList?.length > 0">
     <div fxFlex="100" class="history-order">
-      <div class="header-title">
+      <div class="header-title"  >
         <h3>Riwayat Pembelian</h3>
       </div>
       <div fxLayout="column" class="content-left">
@@ -43,4 +43,12 @@
 
     </div>
   </div>
+
+  <div  *ngIf="orderList?.length == 0" class="empty-data" style="height:80vh;width:100%;text-align: center;" fxLayout="column" fxLayoutAlign="center center">
+      <div fxLayoutAlign="center center" style="height:200px">
+        <div>
+            <mat-icon>import_contacts</mat-icon>
+            <h5>Tidak ada data yang ditampilkan</h5>
+        </div>
+    </div>
 </div>

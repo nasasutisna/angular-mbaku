@@ -83,17 +83,17 @@ export class BookEbookViewComponent implements OnInit {
     this.restApi.orderEbook(this.paramsOrder).subscribe((result:any) => {
       snap.pay(result.token, {
         onSuccess: (response) =>{
-          console.log('sukses');
-          this.getStatusOrder(response.token);
+          console.log('sukses',response);
+          this.getStatusOrder(result.token);
           this.ngZone.run(() => {
             this.isSettlement = true;
           }) 
         },
         onPending: (response) =>{
-          console.log('sukses 2');
+          console.log('sukses 2',response);
           if(response.payment_type != 'gopay'){
             console.log('sukses 3');
-            this.getStatusOrder(response.token);
+            this.getStatusOrder(result.token);
           }
         },
         onError: (response)=>{
@@ -123,10 +123,11 @@ export class BookEbookViewComponent implements OnInit {
            this.isFirst = false;
            this.intervalCheckStatus = setInterval(() => {
             this.restApi.checkStatusOrder(element.transaction_token).subscribe((result:any) => {
+              console.log('status order cek',result);
               if(result.transaction_status == 'settlement'){
                 this.isPendingPayment = false;
                 let params = {
-                  transaction_token: result.token,
+                  transaction_token: result.transaction_token,
                   transaction_status: result.transaction_status,
                 }
                 
