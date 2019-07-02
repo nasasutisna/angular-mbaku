@@ -50,3 +50,54 @@
     opacity: 0.85;
 }
 
+.img-book{
+    height:300px;width:30%
+ }
+
+ .desc-book {
+    height:300px;width:70%;padding-left:15px
+ }
+
+@media screen and (max-width: 865px) {
+
+    .label-filter{
+     display: none;
+   }
+   
+   .list-populer{
+     display: none;
+     height: unset;
+   }
+   
+   .clear {
+     height:0px;
+   }
+   
+   }
+   
+   @media screen and (max-width: 600px) {
+    .container-fluid {
+      width: 100%;
+      padding-right: 5px!important;
+      padding-left: 5px!important;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    .suggest-list {
+        display: none;
+    }
+
+    .img-book{
+        height:300px;
+        width:100%
+     }
+
+     .desc-book {
+        height:300px;width:100%;padding-left:10px;padding-right:10px
+     }
+}
+
+   @media screen and (max-width: 350px) {
+     
+   }

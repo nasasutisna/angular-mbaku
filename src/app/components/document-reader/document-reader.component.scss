@@ -25,3 +25,9 @@
 .thumbs-book:hover::-webkit-scrollbar-thumb {
     background: silver; 
   }
+
+  @media screen and (max-width: 600px) {
+    .thumbs-book{
+        display: none;
+    }
+}

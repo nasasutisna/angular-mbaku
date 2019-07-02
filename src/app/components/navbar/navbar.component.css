@@ -116,6 +116,9 @@
 .search:hover {
   background-color: unset!important;
 }
+.icon-bar{
+  color:white;
+}
 
 .mat-toolbar-multiple-rows[_ngcontent-c3] {
     min-height: 50px;

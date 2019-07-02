@@ -1,5 +1,9 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import { AuthService } from 'app/service/auth.service';
+import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
+import { GlobalService } from 'app/global.service';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -11,12 +15,12 @@ declare interface RouteInfo {
 
 export const ROUTES: RouteInfo[] = [
 	{ path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '' },
-	{ path: '/admin/book', title: 'Buku', icon: 'book', class: '' },
+	{ path: '/login', title: 'Login', icon: 'account_circle', class: '' },
 	// { path: '/table-list', title: 'Table List',  icon:'content_paste', class: '' },
 	// { path: '/typography', title: 'Typography',  icon:'library_books', class: '' },
 	// { path: '/icons', title: 'Icons',  icon:'bubble_chart', class: '' },
 	// { path: '/maps', title: 'Maps',  icon:'location_on', class: '' },
-	// { path: '/notifications', title: 'Notifications', icon: 'notifications', class: '' },
+	{ path: '/register', title: 'Daftar Akun', icon: 'assignment_ind', class: '' },
 	// { path: '/upgrade', title: 'Upgrade to PRO',  icon:'unarchive', class: 'active-pro' },
 ];
 
@@ -45,16 +49,50 @@ export class SidebarComponent implements OnInit {
 	menuItems: any[];
 	isMember: any;
 	isAdmin: any;
+	isLogin: any;
+	keyword = new FormControl();
+	userInfo: any;
+	toggleButton:any;
+	sidebarVisible:any;
 
 	constructor(
-		public authService: AuthService
+		public authService: AuthService,
+		public router: Router,
+		public globalService:GlobalService
 	) { }
 
 	ngOnInit() {
 		this.checkAuth();
 		this.getAuth();
+		// this.search();
+		this.getUserInfo();
 		this.menuItems = ROUTES.filter(menuItem => menuItem);
 	}
+
+	getUserInfo() {
+		let auth = JSON.parse(localStorage.getItem('authentication'));
+		let user = JSON.parse(localStorage.getItem('user'));
+		if (auth) {
+			this.isLogin = auth.isLogin.status;
+			this.userInfo = user;
+			if (auth.user.userStatus == 1) {
+				this.isAdmin = true;
+				this.isMember = false;
+			} else {
+				this.isAdmin = false;
+				this.isMember = true;
+			}
+		}
+
+		console.log(auth);
+	}	
+
+	checkChange(){
+		this.authService.navbar.subscribe(() => {
+			this.getUserInfo();
+		});
+	}
+
 
 	checkAuth() {
 		this.authService.auth.subscribe((data: loginInfo<anggota>) => {
@@ -88,4 +126,30 @@ export class SidebarComponent implements OnInit {
 		}
 		return true;
 	};
+
+	gotoProfile(){
+		this.router.navigateByUrl('/user-profile');
+	}
+
+	gotoHistory(){
+		this.router.navigateByUrl('/history');
+	}
+
+	logout() {
+		localStorage.removeItem('authentication');
+		this.isLogin = false;
+		this.router.navigateByUrl("/dashboard");
+	}
+
+	search() {
+		this.globalService.newEvent(this.keyword.value);
+	}
+
+	sidebarClose() {
+        const body = document.getElementsByTagName('body')[0];
+        this.toggleButton.classList.remove('toggled');
+        this.sidebarVisible = false;
+        body.classList.remove('nav-open');
+	};
+
 }

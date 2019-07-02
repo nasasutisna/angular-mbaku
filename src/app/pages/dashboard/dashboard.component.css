@@ -190,6 +190,16 @@ h4 {
   display: none;
 }
 
+.list-populer{
+  display: none;
+  height: unset;
+}
+
+.clear {
+  height:0px;
+}
+
+
 }
 
 @media screen and (max-width: 350px) {

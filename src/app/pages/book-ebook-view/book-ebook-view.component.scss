@@ -1,7 +1,7 @@
 .container-fluid {
     width: 100%;
-    padding-right: 50px!important;
-    padding-left: 50px!important;
+    padding-right: 50px;
+    padding-left: 50px;
     margin-right: auto;
     margin-left: auto;
   }
@@ -49,4 +49,27 @@ mat-icon{
 
 .after-like {
   width:100%;border:1px solid #4286f4;color:#4286f4;margin-top: 10px;
+}
+
+.container-pdf{
+  margin-left:20px
+}
+
+@media screen and (max-width: 600px) {
+ .container-pdf{
+   margin-left: unset;
+ }
+
+ .container-fluid{
+   padding-left:10px;
+   padding-right:10px;
+ }
+
+ .canvasWrapper{
+  width: 345px!important;
+ }
+
+ .left-box{
+   margin-bottom: 10px;
+ }
 }
