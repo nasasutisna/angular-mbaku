@@ -16,6 +16,8 @@ export class DocumentReaderComponent implements OnInit {
   page:any = 1;
   // totalPage:any = 0;
   urlBlob:any;
+  screen:any;
+  ratio:any;
   thumbsBlob:any;
   @Input() urlFile:any;
   @Input() bookId:any;
@@ -24,7 +26,14 @@ export class DocumentReaderComponent implements OnInit {
   constructor(public globalService:GlobalService, public restApi: RestApiService, public notifService: NotifService, public router: Router) { }
 
   ngOnInit() {
-    console.log(this.fileName);
+    this.screen = screen.width;
+    if(this.screen <= 600){
+      this.ratio = 0.3;
+    }
+    else{
+      this.ratio = 0.15
+    }
+
     this.isLoading = true;
     this.restApi.getFile(this.fileName).subscribe((result) => {
       let reader = new FileReader();

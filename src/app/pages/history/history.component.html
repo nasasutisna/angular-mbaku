@@ -7,7 +7,7 @@
       <div fxLayout="column" class="content-left">
         <div class="content-order" fxLayout="row" fxLayout.lt-sm="column" *ngFor="let list of orderList">
           <div fxFlex="15" style="text-align:center">
-            <img src="{{restApi.url + list?.path_image}}" onError="this.src ='../../../assets/img/maskot-new.png'" style="height:100px;width:100px" alt="">
+            <img src="{{restApi.url + list?.path_image}}" onError="this.src ='../../../assets/img/maskot-new.png'" class="img-book" alt="">
           </div>
           <div fxFlex="55" >
              <div class="title">
@@ -30,7 +30,7 @@
               <button matButton *ngIf="isCancel" (click)="cancelLose()" class="btn-cancel" style="margin-right:5px;background:#3B9D9A">Tidak</button>
               <button matButton *ngIf="isCancel" (click)="cancelOrder(list?.order_id)" class="btn-cancel">Yakin ?</button>
             </div>
-            <div *ngIf="list?.transaction_status == 'settlement'">
+            <div *ngIf="list?.transaction_status == 'settlement'" class="sec-download">
               <button matButton class="btn-download" (click)="download(list?.ebook,list?.judul)">Download</button>
             </div>
           </div>

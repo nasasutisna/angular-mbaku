@@ -12,7 +12,7 @@
     </div>
 </div>
 <div class="thumbs-book">
-    <pdf-viewer (click)="setPage(i)" *ngFor="let i of [1,2,3,4,5]" [page]="i" [src]="thumbsBlob" [zoom]="0.15"
+    <pdf-viewer (click)="setPage(i)" *ngFor="let i of [1,2,3,4,5]" [page]="i" [src]="thumbsBlob" [zoom]="ratio"
      [show-all]='false'></pdf-viewer>
      <!-- <button style="border:1px solid #d85252;color:#d85252;align-items: center" mat-button fxLayoutAlign="center center">
          Beli

@@ -13,6 +13,10 @@
     margin-top:10px;
 }
 
+.link-judul{
+  font-size: 14px;
+}
+
 .link-badge-active {
   padding-right: 8px;
   color:#2d8ac4!important;
@@ -70,6 +74,14 @@ mat-icon{
  }
 
  .left-box{
+   font-size:12px;
    margin-bottom: 10px;
+   margin-left: 10px;
+   margin-right: 10px;
+
  }
+
+ .link-badge a {
+  font-size: 10px;
+}
 }
