@@ -26,9 +26,9 @@
           <mat-icon matSuffix (click)="showHidePass()">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input matInput type="{{inputPassword}}" placeholder="Ulangi Password">
+          <input matInput formControlName="verifyPassword" type="{{inputPassword}}" placeholder="Ulangi Password">
         </mat-form-field>
-        <button mat-button (click)="processRegister()" style="width:100%;background-color:darkcyan;color:white">Daftar</button>
+        <button mat-button (click)="processRegister()" [disabled]="!registerForm.valid" style="width:100%;background-color:darkcyan;color:white">Daftar</button>
       </form>
     </div>
 

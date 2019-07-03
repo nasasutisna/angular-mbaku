@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { RestApiService } from 'app/service/rest-api.service';
 import { Router } from '@angular/router';
 declare var $: any;
@@ -15,8 +15,9 @@ export class RegisterComponent implements OnInit {
   inputPassword: string = 'password';
   constructor(public restApi: RestApiService, public router: Router) { }
   registerForm = new FormGroup({
-    email: new FormControl(),
-    password: new FormControl()
+    email: new FormControl('',[Validators.compose([Validators.required])]),
+    password: new FormControl('',[Validators.compose([Validators.required])]),
+    verifyPassword: new FormControl('',[Validators.compose([Validators.required])]),
   })
 
   ngOnInit() {
@@ -33,6 +34,12 @@ export class RegisterComponent implements OnInit {
   }
 
   processRegister(){
+
+    if(this.registerForm.get("password").value != this.registerForm.get("verifyPassword").value){
+      this.showMessage("Ulangi password tidak sama",'warning','bottom');
+      return false;
+    }
+
     this.restApi.registerAccount(this.registerForm.value).subscribe((results:any) => {
         console.log(results);
         this.showMessage(results.msg,'success');

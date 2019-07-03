@@ -4,7 +4,7 @@
         <mat-icon style="position:absolute;margin-top:15px;margin-left:15px">close</mat-icon>
     </a>
     <div class="logo-img" fxLayoutAlign="start start" style="background:whitesmoke;width:40%;border-radius: 8px 0px 0 8px;">
-      <img src="../../assets/img/logo.jpeg" style="height:50%;width:180px;margin:0 auto;position: relative;top: 15vh"
+      <img src="../../assets/img/maskot-new.png" style="height:50%;width:180px;margin:0 auto;position: relative;top: 10vh"
         alt="">
     </div>
     <div class="container-form" style="background:white;width:60%;padding: 20px;border-radius: 0 8px 8px 0;">
@@ -23,7 +23,7 @@
         <mat-form-field class="example-full-width">
           <input matInput formControlName="verifyPassword" type="{{inputPassword}}" placeholder="Ulangi Password">
         </mat-form-field>
-        <button mat-button style="width:100%;background-color:darkcyan;color:white" (click)="processRegister()">Buat</button>
+        <button [disabled]="!registerForm.valid" mat-button style="width:100%;background-color:darkcyan;color:white" (click)="processRegister()">Buat</button>
       </form>
       <div>
         <p>Belum menjadi Anggota ? <a routerLink="/anggota/daftar" style="color:red"> Daftar Anggota</a></p>

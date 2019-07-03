@@ -1,7 +1,7 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { RestApiService } from 'app/service/rest-api.service';
 import { MatInput } from '@angular/material';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotifService } from 'app/service/notif.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'app/service/auth.service';
@@ -20,8 +20,8 @@ export class LoginComponent implements OnInit {
   passwordInput: any = new FormControl();
 
   loginForm = new FormGroup({
-    email: new FormControl(),
-    password: new FormControl()
+    email: new FormControl('',[Validators.compose([Validators.required])]),
+    password: new FormControl('',[Validators.compose([Validators.required])])
   })
  
   constructor(

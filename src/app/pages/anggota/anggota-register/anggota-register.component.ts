@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RestApiService } from 'app/service/rest-api.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 declare var $: any;
 @Component({
@@ -11,11 +11,12 @@ declare var $: any;
 export class AnggotaRegisterComponent implements OnInit {
 
   registerForm = new FormGroup({
-    kode_anggota: new FormControl(),
-    nama_lengkap: new FormControl(),
-    email: new FormControl(),
-    nomor_handphone: new FormControl(),
-    password: new FormControl()
+    kode_anggota: new FormControl('',[Validators.compose([Validators.required])]),
+    nama_lengkap: new FormControl('',[Validators.compose([Validators.required])]),
+    email: new FormControl('',[Validators.compose([Validators.required])]),
+    nomor_handphone: new FormControl('',[Validators.compose([Validators.required])]),
+    password: new FormControl('',[Validators.compose([Validators.required])]),
+    verifyPassword: new FormControl('',[Validators.compose([Validators.required])])
   })
 
   hide = true;
@@ -29,7 +30,11 @@ export class AnggotaRegisterComponent implements OnInit {
   }
 
   processRegister() {
-    console.log(this.registerForm.value);
+    if(this.registerForm.get("password").value != this.registerForm.get("verifyPassword").value){
+      this.showMessage("Ulangi password tidak sama",'warning','bottom');
+      return false;
+    }
+
     this.restApi.registerAnggota(this.registerForm.value).subscribe((results: any) => {
       console.log(results);
       this.showMessage(results.msg, 'success');
