@@ -5,9 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MemberLayoutRoutes } from './member-layout.routing';
 import { DashboardComponent } from 'app/pages/dashboard/dashboard.component';
 import { UserProfileComponent } from 'app/pages/user-profile/user-profile.component';
-import { TableListComponent } from 'app/pages/table-list/table-list.component';
 import { IconsComponent } from 'app/icons/icons.component';
-import { MapsComponent } from 'app/pages/maps/maps.component';
 import { NotificationsComponent } from 'app/pages/notifications/notifications.component';
 import { NgxContentLoadingModule } from 'ngx-content-loading';
 import {

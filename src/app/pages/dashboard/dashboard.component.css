@@ -168,11 +168,24 @@ h4 {
   padding-left:20px;line-height:55px;font-size: 12px;
 }
 
-@media screen and (max-width: 990px) {
-  .mat-paginator-page-size-label{
-    display: none;
-  }
+@media screen and (max-width: 600px) {
+  .marginless-paginator-range-label .mat-paginator .mat-paginator-outer-container {
+    display: none!important;
 }
+
+ .container-fluid {
+  width: 100%;
+  padding-right: 10px!important;
+  padding-left: 10px!important;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+ .mat-paginator-page-size-label{
+  display: none;
+}
+}
+
 
 @media screen and (max-width: 765px) {
  .side-filter{

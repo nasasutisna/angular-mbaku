@@ -3,3 +3,25 @@
     margin-left: 20px;
     height: 100%;
 }
+
+.sidebar{
+    display: none;
+}
+
+.sidebar-mobile-menu {
+    display: none;
+}
+
+
+
+@media screen and (max-width: 600px) {
+  .sidebar-mobile-menu {
+      display: block;
+  }
+
+  .sidebar{
+    display: block;
+  }
+
+ 
+}

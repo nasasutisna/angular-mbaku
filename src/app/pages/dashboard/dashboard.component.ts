@@ -3,7 +3,6 @@ import * as Chartist from 'chartist';
 import { RestApiService } from 'app/service/rest-api.service';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { MatBottomSheetRef, MatBottomSheet, MatInput, MatPaginator } from '@angular/material';
-import { TableListComponent } from 'app/pages/table-list/table-list.component';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { debounceTime } from 'rxjs/operators';
@@ -236,11 +235,6 @@ export class DashboardComponent implements OnInit {
     this.search();
 
   }
-
-  openBottomSheet(): void {
-    this.bottomSheet.open(TableListComponent);
-  }
-
 
 }
 
