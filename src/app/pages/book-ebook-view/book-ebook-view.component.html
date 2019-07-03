@@ -20,7 +20,7 @@
                    <mat-icon>get_app</mat-icon> Download eBook
                 </button>
 
-                <button  *ngIf="isFirst && !isSettlement" (click)="openSnap()" mat-button style="width:100%;background:orangered;color:white;margin-top:5px;margin-bottom:5px;">
+                <button  *ngIf="isFirst && !isSettlement && book?.harga_ebook !== 0" (click)="openSnap()" mat-button style="width:100%;background:orangered;color:white;margin-top:5px;margin-bottom:5px;">
                    <mat-icon>shopping_cart</mat-icon> 
                    <span>Beli eBook</span> 
                 </button>
